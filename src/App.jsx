@@ -1,28 +1,26 @@
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
-import Home from './pages/Home.jsx'
-import About from './pages/About.jsx'
-import Programs from './pages/Programs.jsx'
-import ProgramDetail from './pages/ProgramDetail.jsx'
-import Scholarship from './pages/Scholarship.jsx'
-import TestPrep from './pages/TestPrep.jsx'
-import Faqs from './pages/Faqs.jsx'
-import Contact from './pages/Contact.jsx'
-import NotFound from './pages/NotFound.jsx'
+import InProgress from './pages/InProgress.jsx'
+
+// While content is being prepared, every page shows the "being updated" message.
+// The finished pages are still in src/pages/ — to switch a page back on, import it
+// and use it in place of <InProgress />, e.g.:
+//   import About from './pages/About.jsx'
+//   <Route path="about" element={<About />} />
 
 export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="programs" element={<Programs />} />
-        <Route path="programs/:slug" element={<ProgramDetail />} />
-        <Route path="scholarship" element={<Scholarship />} />
-        <Route path="test-prep" element={<TestPrep />} />
-        <Route path="faqs" element={<Faqs />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="*" element={<NotFound />} />
+        <Route index element={<InProgress />} />
+        <Route path="about" element={<InProgress />} />
+        <Route path="programs" element={<InProgress />} />
+        <Route path="programs/:slug" element={<InProgress />} />
+        <Route path="scholarship" element={<InProgress />} />
+        <Route path="test-prep" element={<InProgress />} />
+        <Route path="faqs" element={<InProgress />} />
+        <Route path="contact" element={<InProgress />} />
+        <Route path="*" element={<InProgress />} />
       </Route>
     </Routes>
   )

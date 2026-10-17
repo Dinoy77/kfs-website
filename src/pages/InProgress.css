@@ -1,0 +1,36 @@
+/* "Being updated" page — same navy + red as the navbar */
+.ip {
+  --ip-navy: #12275e;
+  --ip-red: #c62828;
+  background: #f4f6fb;
+  border-top: 4px solid var(--ip-red);
+  min-height: calc(100vh - 360px);
+  display: flex;
+  align-items: center;
+  padding: 72px 0;
+}
+.ip-inner { max-width: 760px; }
+.ip-page {
+  display: inline-block; margin: 0 0 18px; padding: 5px 14px; border-radius: 999px;
+  background: #fff; border: 1px solid #dfe4f0; color: var(--ip-navy); font-weight: 600; font-size: .95rem;
+}
+.ip-title {
+  color: var(--ip-navy); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800;
+  letter-spacing: -0.02em; margin-bottom: 16px;
+}
+.ip-text { color: #4a5675; font-size: 1.15rem; max-width: 56ch; margin-bottom: 28px; }
+.ip-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+.ip-btn {
+  display: inline-flex; align-items: center; padding: 13px 22px; border-radius: 6px;
+  font-weight: 600; text-decoration: none; border: 2px solid var(--ip-navy);
+}
+.ip-btn-primary { background: var(--ip-navy); color: #fff; }
+.ip-btn-primary:hover { background: var(--ip-red); border-color: var(--ip-red); color: #fff; }
+.ip-btn-outline { color: var(--ip-navy); background: #fff; }
+.ip-btn-outline:hover { border-color: var(--ip-red); color: var(--ip-red); }
+.ip-address { color: #6b7590; font-size: .95rem; margin: 0; }
+
+@media (max-width: 640px) {
+  .ip { padding: 48px 0; }
+  .ip-btn { width: 100%; justify-content: center; }
+}
