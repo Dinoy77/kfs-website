@@ -24,7 +24,7 @@ export default function TestPrep() {
         <div className="wrap detail-grid">
           <div className="exam-list">
             {exams.map((e) => (
-              <article key={e.name} className="exam">
+              <article key={e.name} id={e.name.toLowerCase()} className="exam">
                 <h2>{e.name}</h2>
                 <p>{e.text}</p>
                 <a className="text-link" href={e.link} target="_blank" rel="noreferrer">Official {e.name} website</a>

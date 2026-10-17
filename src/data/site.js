@@ -6,7 +6,7 @@ export const site = {
   shortName: 'KFS',
   tagline: 'Talent acquisition and skill development for students and professionals',
   // Set to '/img/logo.jpg' once the logo file is copied into public/img
-  logo: null,
+  logo: '/img/logo.jpg',
 
   address: {
     line1: '2nd Floor, Cheenkayil Building',
