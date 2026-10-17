@@ -243,3 +243,4 @@ p { margin: 0 0 1em; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; scroll-behavior: auto !important; }
 }
+   .nowrap { white-space: nowrap; }

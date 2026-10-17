@@ -18,7 +18,7 @@ export default function Home() {
         <div className="wrap hero-grid">
           <div className="hero-copy">
             <p className="status-pill">Admissions open for B-Pharm lateral entry</p>
-            <h1>Finish your B‑Pharm without paying a rupee.</h1>
+            <h1>Finish your <span className="nowrap">B-Pharm</span> without paying a rupee.</h1>
             <p className="lede">
               D-Pharm holders from these communities get full Central and State Government
               assistance — tuition and related expenses covered, and a laptop included.
