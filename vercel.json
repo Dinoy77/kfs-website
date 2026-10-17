@@ -1,0 +1,23 @@
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/about.html", "destination": "/about", "permanent": true },
+    { "source": "/contact.html", "destination": "/contact", "permanent": true },
+    { "source": "/faq.html", "destination": "/faqs", "permanent": true },
+    { "source": "/service.html", "destination": "/programs", "permanent": true },
+    { "source": "/lateral_entry.html", "destination": "/scholarship", "permanent": true },
+    { "source": "/KEAM.html", "destination": "/test-prep", "permanent": true },
+    { "source": "/NEET.html", "destination": "/test-prep", "permanent": true },
+    { "source": "/blog.html", "destination": "/test-prep", "permanent": true },
+    { "source": "/team.html", "destination": "/test-prep", "permanent": true },
+    { "source": "/Industry_Integrated_Academic_Program.html", "destination": "/programs/industry-integrated-academic-program", "permanent": true },
+    { "source": "/Pay_After_Placement_Program.html", "destination": "/programs/pay-after-placement-program", "permanent": true },
+    { "source": "/International_University_Collaborative_Program.html", "destination": "/programs/international-university-collaborative-program", "permanent": true },
+    { "source": "/Training_and_Placement.html", "destination": "/programs/training-and-placement", "permanent": true },
+    { "source": "/Train_and_Trainer_Program.html", "destination": "/programs/train-the-trainer-program", "permanent": true },
+    { "source": "/Online_Coaching_Management.html", "destination": "/programs/online-coaching-management", "permanent": true },
+    { "source": "/Career_Planning_Mapping_Management.html", "destination": "/programs/career-planning-and-mapping", "permanent": true },
+    { "source": "/Students_Internship.html", "destination": "/programs/students-internship", "permanent": true }
+  ]
+}
