@@ -85,3 +85,85 @@
 @media (prefers-reduced-motion: reduce) {
   .hs-slide, .hs-dot, .hs-arrow { transition: none; }
 }
+
+/* ===== B-Pharm section (below the banner) ===== */
+.bp { padding-block: 64px 80px; background: #fff; }
+.bp-grid {
+  display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr);
+  gap: 56px; align-items: center;
+}
+
+/* Photo with scholarship badge */
+.bp-photo {
+  position: relative; border-radius: 20px; background: var(--kfs-soft);
+  aspect-ratio: 4 / 5; max-width: 100%;
+}
+.bp-photo img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: contain; object-position: bottom center; border-radius: 20px;
+}
+.bp-photo-missing {
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center;
+  color: var(--kfs-navy); border: 2px dashed #c8d0e4; border-radius: 20px;
+}
+.bp-badge {
+  position: absolute; right: -20px; bottom: 32px;
+  display: grid; gap: 2px; padding: 16px 22px; border-radius: 12px;
+  background: #fff; border-left: 5px solid var(--kfs-red);
+  box-shadow: 0 14px 30px rgba(18, 39, 94, .18);
+}
+.bp-badge strong { font: 800 1.4rem/1.1 var(--font-display); color: var(--kfs-red); }
+.bp-badge span { color: #56627f; font-weight: 600; font-size: .95rem; }
+
+/* Details card */
+.bp-tag {
+  display: inline-block; margin: 0 0 14px; padding: 6px 14px; border-radius: 999px;
+  background: var(--kfs-red); color: #fff; font-weight: 700; font-size: .85rem; letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.bp-title {
+  color: var(--kfs-navy); font-size: clamp(2rem, 4.2vw, 3rem); font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 8px; text-wrap: balance;
+}
+.bp-lead { font: 700 clamp(1.15rem, 2vw, 1.4rem)/1.3 var(--font-display); color: var(--kfs-red); margin: 0 0 24px; }
+.bp-label { color: #56627f; margin: 0 0 10px; font-weight: 600; }
+.bp-cats { list-style: none; padding: 0; margin: 0 0 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+.bp-cats li {
+  padding: 7px 16px; border-radius: 8px; background: var(--kfs-soft); color: var(--kfs-navy);
+  border: 1px solid #dfe4f0; font-weight: 700;
+}
+.bp-text { color: #4a5675; font-size: 1.05rem; max-width: 62ch; margin: 0 0 24px; }
+
+.bp-laptop {
+  display: flex; align-items: center; gap: 18px; padding: 20px 24px; margin-bottom: 28px;
+  border-radius: 12px; background: var(--kfs-navy); color: #fff;
+}
+.bp-laptop svg { flex-shrink: 0; color: #fff; }
+.bp-laptop-title { font: 800 1.35rem/1.15 var(--font-display); margin: 0; color: #fff; }
+.bp-laptop-text { margin: 4px 0 0; font-style: italic; color: #c9d2ea; }
+
+.bp-contact { border-top: 1px solid #dfe4f0; padding-top: 22px; }
+.bp-contact-label { font-weight: 700; color: var(--kfs-navy); margin: 0 0 10px; }
+.bp-phone {
+  display: inline-flex; align-items: center; gap: 12px; text-decoration: none;
+  font: 800 clamp(1.5rem, 3vw, 2rem)/1 var(--font-display); color: var(--kfs-red);
+  font-variant-numeric: tabular-nums;
+}
+.bp-phone:hover { color: var(--kfs-navy); }
+.bp-phone-icon {
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--kfs-red); color: #fff;
+}
+.bp-phone:hover .bp-phone-icon { background: var(--kfs-navy); }
+
+@media (max-width: 960px) {
+  .bp-grid { grid-template-columns: 1fr; gap: 40px; }
+  .bp-photo { max-width: 420px; width: 100%; justify-self: center; }
+}
+@media (max-width: 640px) {
+  .bp { padding-block: 40px 56px; }
+  .bp-badge { right: 12px; bottom: 16px; padding: 12px 16px; }
+  .bp-badge strong { font-size: 1.15rem; }
+  .bp-laptop { padding: 16px; gap: 14px; }
+  .bp-laptop-title { font-size: 1.15rem; }
+}
