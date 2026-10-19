@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import InProgress from './pages/InProgress.jsx'
+import Home from './pages/Home.jsx'
 
 // While content is being prepared, every page shows the "being updated" message.
 // The finished pages are still in src/pages/ — to switch a page back on, import it
@@ -12,7 +13,7 @@ export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<InProgress />} />
+        <Route index element={<Home />} />
         <Route path="about" element={<InProgress />} />
         <Route path="programs" element={<InProgress />} />
         <Route path="programs/:slug" element={<InProgress />} />
