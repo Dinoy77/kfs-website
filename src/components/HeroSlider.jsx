@@ -17,6 +17,33 @@ function SlideImage({ slide }) {
   return <img src={slide.image} alt={slide.alt} className="hs-img" onError={() => setMissing(true)} />
 }
 
+function PosterSlide({ slide }) {
+  return (
+    <div className="hs-poster">
+      <div className="hs-poster-copy">
+        <div className="hs-poster-tags">
+          <p className="hs-poster-tag">{slide.tag}</p>
+          <p className="hs-poster-tag is-alt">{slide.badge}</p>
+        </div>
+        <h2 className="hs-poster-title">{slide.title}</h2>
+        <p className="hs-poster-lead">{slide.lead}</p>
+        <p className="hs-poster-text">{slide.text}</p>
+        <div className="hs-poster-phones">
+          {slide.phones.map((p, i) => (
+            <a key={p.tel} href={`tel:${p.tel}`} className={i === 0 ? 'is-main' : ''}>
+              Call {p.display}
+            </a>
+          ))}
+        </div>
+        <p className="hs-poster-note">{slide.note}</p>
+      </div>
+      <a className="hs-poster-img" href={slide.image} target="_blank" rel="noreferrer" aria-label="Open the full poster">
+        <img src={slide.image} alt={slide.alt} />
+      </a>
+    </div>
+  )
+}
+
 export default function HeroSlider() {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -50,7 +77,7 @@ export default function HeroSlider() {
             aria-label={`${i + 1} of ${count}`}
             aria-hidden={i !== index}
           >
-            <SlideImage slide={s} />
+            {s.type === 'poster' ? <PosterSlide slide={s} /> : <SlideImage slide={s} />}
           </div>
         ))}
         {count > 1 && (

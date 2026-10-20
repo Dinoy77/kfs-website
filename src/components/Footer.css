@@ -1,0 +1,59 @@
+/* ===== Footer — navy + red from the KFS logo ===== */
+.ft {
+  --ft-navy: #12275e;
+  --ft-red: #c62828;
+  --ft-text: #c9d2ea;
+
+  background: var(--ft-navy);
+  color: var(--ft-text);
+  border-top: 4px solid var(--ft-red);
+  font-family: var(--font-body);
+}
+.ft a { color: #fff; text-decoration: none; }
+.ft a:hover { color: #fff; text-decoration: underline; text-decoration-color: var(--ft-red); text-underline-offset: 4px; }
+
+.ft-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: 56px;
+  padding-block: 64px 44px;
+}
+
+/* Logo on a white card, like the old site */
+.ft-logo {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #fff; border-radius: 10px; padding: 10px 18px; height: 88px; margin-bottom: 20px;
+}
+.ft-logo:hover { text-decoration: none; }
+.ft-logo img { height: 100%; width: auto; }
+.ft-logo-text { font: 800 1.8rem/1 var(--font-display); color: var(--ft-red); text-align: center; }
+.ft-logo-text small { display: block; font: 600 .62rem/1.4 var(--font-body); color: var(--ft-navy); }
+.ft-about p { margin: 0; max-width: 40ch; line-height: 1.65; }
+
+.ft-h { color: #fff; font-size: 1.25rem; font-weight: 800; margin: 6px 0 18px; }
+
+.ft-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.ft-links a { display: inline-flex; align-items: center; gap: 10px; }
+.ft-links a::before {
+  content: ''; width: 7px; height: 7px; flex-shrink: 0;
+  border-top: 2px solid var(--ft-red); border-right: 2px solid var(--ft-red); transform: rotate(45deg);
+}
+
+.ft-contact { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.ft-contact li { display: flex; gap: 12px; align-items: flex-start; line-height: 1.5; }
+.ft-contact a { overflow-wrap: anywhere; }
+.ft-icon { flex-shrink: 0; margin-top: 3px; color: var(--ft-red); }
+.ft-stack { display: grid; gap: 2px; }
+
+.ft-base { border-top: 1px solid rgba(255, 255, 255, .15); padding-block: 20px; }
+.ft-base p { margin: 0; font-size: .92rem; }
+
+@media (max-width: 960px) {
+  .ft-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .ft-about { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .ft-grid { grid-template-columns: 1fr; gap: 32px; padding-block: 48px 32px; }
+  .ft-logo { height: 76px; }
+  .ft { padding-bottom: 54px; } /* room for the Call / WhatsApp bar */
+}

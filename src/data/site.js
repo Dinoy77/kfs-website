@@ -14,7 +14,7 @@ export const site = {
     city: 'Thiruvananthapuram 695015',
     mapUrl: 'https://goo.gl/maps/Zd4BCynmTb98ivUJ6',
     mapEmbed:
-      'https://www.google.com/maps?q=MG+College+Paruthippara+Thiruvananthapuram&output=embed',
+      'https://maps.google.com/maps?q=8.52561,76.93850&z=17&output=embed',
   },
 
   phone: { display: '080-4202 4160', tel: '+918042024160' },
