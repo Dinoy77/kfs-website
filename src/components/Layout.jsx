@@ -5,10 +5,18 @@ import Footer from './Footer.jsx'
 import { site, whatsappLink } from '../data/site.js'
 
 export default function Layout() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
+
+  // New page: start at the top. Link with #section (e.g. /#contact): scroll to that section.
   useEffect(() => {
+    if (hash) {
+      const t = setTimeout(() => {
+        document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth' })
+      }, 50)
+      return () => clearTimeout(t)
+    }
     window.scrollTo(0, 0)
-  }, [pathname])
+  }, [pathname, hash])
 
   return (
     <>

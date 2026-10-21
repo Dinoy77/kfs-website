@@ -1,0 +1,68 @@
+/* About page — uses the navy + red tokens defined in Home.css */
+
+/* Intro */
+.ap-intro { padding-block: 80px; background: #fff; }
+.ap-intro-grid { align-items: start; }
+.ap-photos { position: sticky; top: 150px; }
+
+/* Quote band */
+.ap-quote {
+  background:
+    radial-gradient(circle at 90% 10%, rgba(198, 40, 40, .32), transparent 45%),
+    var(--kfs-navy);
+  color: #fff;
+}
+.ap-quote-inner { padding-block: 72px; max-width: 900px; text-align: center; }
+.ap-quote blockquote { margin: 0; }
+.ap-quote-text {
+  margin: 0 0 18px; color: #fff; text-wrap: balance;
+  font: 800 clamp(1.7rem, 4vw, 2.8rem)/1.15 var(--font-display); letter-spacing: -0.015em;
+}
+.ap-quote-answer {
+  margin: 0 auto; max-width: 52ch; color: #c9d2ea; font-size: clamp(1.05rem, 2vw, 1.25rem);
+  padding-top: 18px; border-top: 3px solid var(--kfs-red); display: inline-block;
+}
+
+/* Focus cards */
+.ap-focus { padding-block: 80px; background: var(--kfs-soft); }
+.ap-head { text-align: center; margin-bottom: 40px; }
+.ap-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.ap-card {
+  display: flex; flex-direction: column; gap: 12px; padding: 32px 28px; border-radius: 16px;
+  background: #fff; border: 1px solid #dfe4f0; border-top: 4px solid var(--kfs-red);
+}
+.ap-card-icon {
+  width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center;
+  background: var(--kfs-soft); color: var(--kfs-navy);
+}
+.ap-card h3 { color: var(--kfs-navy); font-size: 1.25rem; margin: 4px 0 0; line-height: 1.25; }
+.ap-card p { color: #4a5675; margin: 0; }
+
+/* Contact strip */
+.ap-cta { background: #fff; border-top: 1px solid #dfe4f0; }
+.ap-cta-inner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;
+  padding-block: 56px;
+}
+.ap-cta h2 { color: var(--kfs-navy); font-size: clamp(1.5rem, 3vw, 2rem); margin: 0 0 6px; }
+.ap-cta p { color: #4a5675; margin: 0; }
+.ap-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.ap-btn {
+  display: inline-flex; justify-content: center; padding: 14px 24px; border-radius: 8px;
+  font-weight: 700; text-decoration: none; border: 2px solid transparent;
+}
+.ap-btn-red { background: var(--kfs-red); color: #fff; }
+.ap-btn-red:hover { background: var(--kfs-navy); color: #fff; }
+.ap-btn-line { border-color: var(--kfs-navy); color: var(--kfs-navy); }
+.ap-btn-line:hover { background: var(--kfs-navy); color: #fff; }
+
+@media (max-width: 960px) {
+  .ap-photos { position: static; }
+  .ap-cards { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
+}
+@media (max-width: 640px) {
+  .ap-intro, .ap-focus { padding-block: 56px; }
+  .ap-quote-inner { padding-block: 52px; }
+  .ap-btn { width: 100%; }
+  .ap-cta-actions { width: 100%; }
+}

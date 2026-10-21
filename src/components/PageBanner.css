@@ -1,0 +1,33 @@
+/* Inner-page banner — navy with a red edge, optional photo underneath */
+.pb {
+  --pb-navy: #12275e;
+  --pb-red: #c62828;
+  position: relative; isolation: isolate; overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(198, 40, 40, .30), transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .06), transparent 40%),
+    var(--pb-navy);
+  border-bottom: 4px solid var(--pb-red);
+  color: #fff;
+}
+.pb.has-image::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: var(--pb-image) center / cover no-repeat;
+  opacity: .25;
+}
+.pb-inner { padding-block: 72px 64px; text-align: center; }
+.pb-title {
+  color: #fff; margin: 0 0 14px; font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-weight: 800; letter-spacing: -0.02em; line-height: 1.05;
+}
+.pb-crumbs {
+  list-style: none; margin: 0; padding: 0; display: inline-flex; flex-wrap: wrap; justify-content: center;
+  gap: 10px; color: #c9d2ea; font-weight: 600;
+}
+.pb-crumbs li + li::before { content: '/'; margin-right: 10px; color: var(--pb-red); }
+.pb-crumbs a { color: #fff; text-decoration: none; }
+.pb-crumbs a:hover { text-decoration: underline; text-decoration-color: var(--pb-red); }
+
+@media (max-width: 640px) {
+  .pb-inner { padding-block: 48px 44px; }
+}
