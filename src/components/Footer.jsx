@@ -7,6 +7,7 @@ const year = new Date().getFullYear()
 const quickLinks = [
   { label: 'About us', to: '/about' },
   { label: 'Our services', to: '/programs' },
+  { label: 'Our clients', to: '/clients' },
   { label: 'FAQs', to: '/faqs' },
   { label: 'Contact us', to: '/contact' },
 ]

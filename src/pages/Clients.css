@@ -1,0 +1,32 @@
+/* Clients page — uses the navy + red tokens from Home.css */
+.cl { padding-block: 72px 88px; background: var(--kfs-soft); }
+.cl-head { text-align: center; margin: 0 auto 44px; max-width: 640px; }
+.cl-intro { color: #4a5675; margin: 0; font-size: 1.05rem; }
+
+.cl-grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;
+}
+.cl-card {
+  display: grid; place-items: center; aspect-ratio: 16 / 10; padding: 28px;
+  background: #fff; border: 1px solid #dfe4f0; border-radius: 16px;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.cl-card:hover {
+  border-color: var(--kfs-red); transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(18, 39, 94, .12);
+}
+.cl-card img { max-width: 80%; max-height: 120px; width: auto; height: auto; object-fit: contain; }
+.cl-name { font: 800 1.25rem/1.25 var(--font-display); color: var(--kfs-navy); text-align: center; }
+
+@media (max-width: 860px) { .cl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } }
+@media (max-width: 640px) {
+  .cl { padding-block: 52px 64px; }
+  .cl-card { padding: 16px; border-radius: 12px; }
+  .cl-card img { max-height: 80px; }
+  .cl-name { font-size: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cl-card { transition: none; }
+  .cl-card:hover { transform: none; }
+}

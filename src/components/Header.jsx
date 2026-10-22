@@ -22,6 +22,7 @@ const menu = [
       { label: 'NEET', to: '/test-prep#neet' },
     ],
   },
+  { label: 'Clients', to: '/clients' },
   { label: 'FAQs', to: '/faqs' },
   { label: 'Contact', to: '/contact' },
 ]
