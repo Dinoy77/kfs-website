@@ -6,134 +6,141 @@
 }
 
 /* ===== Banner slider =====
-   The banner sits inside the page width with rounded corners,
-   and is never taller than the screen (minus the header). */
-.hs {
-  background: linear-gradient(180deg, var(--kfs-soft) 0%, #fff 100%);
-  padding-block: 28px 24px;
-}
-.hs-frame {
-  position: relative;
-  max-width: var(--wrap, 1160px);
-  margin: 0 auto;
-  padding-left: max(32px, env(safe-area-inset-left, 0px));
-  padding-right: max(32px, env(safe-area-inset-right, 0px));
-}
+   Full window width. Each slide keeps the banner's shape (about 2:1) but is never
+   taller than the window below the header (minus the dots bar), so the whole slide
+   is always visible. Banners are never cropped. */
+.hs { --hs-header: 122px; --hs-bar: 52px; background: var(--kfs-navy); }
+.hs-frame { position: relative; }
 .hs-track {
-  /* Every slide has the same wide shape as the banner images (about 2:1),
-     and the whole slider always fits on the screen. */
   --hs-ratio: 2.03;
-  position: relative;            /* arrows are placed on the banner's edges */
+  position: relative;
   display: grid;
-  width: min(100%, calc((100vh - 230px) * var(--hs-ratio)));
-  margin-inline: auto;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  width: 100%;
+  height: min(calc(100vw / var(--hs-ratio)), calc(100svh - var(--hs-header) - var(--hs-bar)));
+  min-height: 180px;
+  overflow: hidden;
 }
 .hs-slide {
   grid-area: 1 / 1;
-  display: flex; justify-content: center; align-items: center;
+  min-width: 0; min-height: 0;
+  display: flex;
   opacity: 0; visibility: hidden;
   transition: opacity .7s ease, visibility .7s;
 }
 .hs-slide.is-active { opacity: 1; visibility: visible; }
+.hs-slide { container-type: size; }   /* lets the poster column size itself to the slide height */
+.hs-slide > * { width: 100%; height: 100%; }
 
-.hs-slide > * { width: 100%; }
+/* Image banner: whole banner visible; blurred copy fills any side space */
+.hs-imgwrap { position: relative; overflow: hidden; background: var(--kfs-navy); }
+.hs-imgwrap::before {
+  content: ''; position: absolute; inset: -40px;
+  background: var(--hs-bg) center / cover no-repeat;
+  filter: blur(28px) brightness(.8) saturate(1.1);
+}
 .hs-img {
-  display: block;
-  width: 100%; height: auto;
-  border-radius: 16px;
-  box-shadow: 0 18px 40px rgba(18, 39, 94, .18);
+  position: relative; display: block;
+  width: 100%; height: 100%; object-fit: contain; object-position: center;
 }
 
 /* Poster slide: details on the left, full portrait poster on the right.
-   Text sizes follow the slide width (cqw), so it scales down on phones. */
+   Text scales with the slide size, so it fits on every screen. */
 .hs-poster {
-  container-type: inline-size;
-  aspect-ratio: var(--hs-ratio);
-  /* poster is 1130 x 1600 (ratio 0.706), so it takes 0.706 / 2.03 = 34.8% of the width */
-  display: grid; grid-template-columns: minmax(0, 1fr) 34.8%;
-  border-radius: 16px; overflow: hidden;
+  container-type: size;
+  display: grid; grid-template-columns: minmax(0, 1fr) min(calc(100cqh * 0.706), 50%);
+  /* same gap on the right of the poster as on the left of the text, so the slide is balanced */
+  padding-right: max(16px, min(6cqw, 12cqh));
+  overflow: hidden;
   background:
     radial-gradient(circle at 15% 15%, rgba(198, 40, 40, .28), transparent 50%),
     var(--kfs-navy);
-  box-shadow: 0 18px 40px rgba(18, 39, 94, .18);
 }
 .hs-poster-copy {
   display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-  gap: 1.3cqw; padding: 3cqw 4cqw; color: #fff; min-width: 0;
+  gap: min(1.3cqw, 2.6cqh); padding: min(3cqw, 6cqh) min(4cqw, 8cqh) min(3cqw, 6cqh) max(16px, min(6cqw, 12cqh));
+  color: #fff; min-width: 0;
 }
-.hs-poster-tags { display: flex; flex-wrap: wrap; gap: .8cqw; }
-.hs-poster-tag.is-alt { background: #fff; color: var(--kfs-red); }
+.hs-poster-tags { display: flex; flex-wrap: wrap; gap: min(.8cqw, 1.6cqh); }
 .hs-poster-tag {
-  margin: 0; padding: .5cqw 1.4cqw; border-radius: 999px; background: var(--kfs-red); color: #fff;
-  font-weight: 700; font-size: max(10px, 1.4cqw); letter-spacing: .06em; text-transform: uppercase;
+  margin: 0; padding: min(.5cqw, 1cqh) min(1.4cqw, 2.8cqh); border-radius: 999px; background: var(--kfs-red); color: #fff;
+  font-weight: 700; font-size: max(10px, min(1.4cqw, 2.8cqh)); letter-spacing: .06em; text-transform: uppercase;
 }
+.hs-poster-tag.is-alt { background: #fff; color: var(--kfs-red); }
 .hs-poster-title {
-  margin: 0; color: #fff; font-size: max(17px, 4.6cqw); font-weight: 800;
+  margin: 0; color: #fff; font-size: max(17px, min(4.6cqw, 9.2cqh)); font-weight: 800;
   line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance;
 }
 .hs-poster-lead {
-  margin: 0; padding: .3cqw 1cqw; background: #ffd400; color: var(--kfs-navy);
-  font: 800 max(12px, 2.3cqw)/1.25 var(--font-display);
+  margin: 0; padding: min(.3cqw, .6cqh) min(1cqw, 2cqh); background: #ffd400; color: var(--kfs-navy);
+  font: 800 max(12px, min(2.3cqw, 4.6cqh))/1.25 var(--font-display);
 }
-.hs-poster-text { margin: 0; color: #c9d2ea; font-size: max(11px, 1.55cqw); line-height: 1.45; max-width: 52ch; }
-.hs-poster-phones { display: flex; flex-wrap: wrap; gap: 1cqw; margin-top: .6cqw; }
+.hs-poster-text { margin: 0; color: #c9d2ea; font-size: max(11px, min(1.55cqw, 3.1cqh)); line-height: 1.45; max-width: 52ch; }
+.hs-poster-phones { display: flex; flex-wrap: wrap; gap: min(1cqw, 2cqh); margin-top: min(.6cqw, 1.2cqh); }
 .hs-poster-phones a {
-  padding: 1cqw 1.8cqw; border-radius: 8px; font-weight: 700; font-size: max(11px, 1.6cqw);
+  padding: min(1cqw, 2cqh) min(1.8cqw, 3.6cqh); border-radius: 8px; font-weight: 700; font-size: max(11px, min(1.6cqw, 3.2cqh));
   text-decoration: none; color: #fff; border: 2px solid rgba(255, 255, 255, .55); white-space: nowrap;
 }
 .hs-poster-phones a.is-main { background: var(--kfs-red); border-color: var(--kfs-red); }
 .hs-poster-phones a:hover { background: #fff; border-color: #fff; color: var(--kfs-navy); }
-.hs-poster-note { margin: 0; color: #9fb0d6; font-size: max(10px, 1.2cqw); }
+.hs-poster-note { margin: 0; color: #9fb0d6; font-size: max(10px, min(1.2cqw, 2.4cqh)); }
 
-.hs-poster-img { position: relative; display: block; min-height: 0; background: #fff; }
+.hs-poster-img { position: relative; display: block; min-height: 0; background: var(--kfs-navy); box-shadow: 0 0 40px rgba(0, 0, 0, .35); }
 .hs-poster-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 
-
-/* Small screens: keep only the essentials so nothing overflows */
+/* Small slides: keep only the essentials so nothing overflows */
 @container (max-width: 640px) {
   .hs-poster-text, .hs-poster-note { display: none; }
   .hs-poster-phones a:not(.is-main) { display: none; }
   .hs-poster-copy { gap: 6px; padding: 12px 14px; }
+  .hs-poster { padding-right: 0; }
 }
 
 /* Placeholder until the image file is added */
 .hs-missing {
-  width: 100%; min-height: 360px; display: grid; place-items: center; padding: 24px; text-align: center;
-  color: var(--kfs-navy); background: #fff; border: 2px dashed #c8d0e4; border-radius: 16px;
+  width: 100%; height: 100%; display: grid; place-items: center; padding: 24px; text-align: center;
+  color: #fff; border: 2px dashed rgba(255, 255, 255, .35);
 }
+.hs-missing code { color: #fff; }
 
-/* Arrows — white circles on the banner edges */
+/* Arrows — in the bar under the banner, either side of the dots,
+   so they never cover any banner text */
+.hs-track { position: static; }
 .hs-arrow {
-  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
-  width: 48px; height: 48px; border-radius: 50%; cursor: pointer;
+  position: absolute; z-index: 2;
+  bottom: calc((var(--hs-bar) - 36px) / 2);
+  width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
   display: grid; place-items: center;
   background: #fff; color: var(--kfs-navy); border: 0;
-  box-shadow: 0 6px 18px rgba(18, 39, 94, .25);
   transition: background .2s ease, color .2s ease;
 }
+.hs-arrow svg { width: 18px; height: 18px; }
 .hs-arrow:hover { background: var(--kfs-red); color: #fff; }
-.hs-prev { left: -24px; }
-.hs-next { right: -24px; }
+.hs-prev { left: calc(50% - 110px); }
+.hs-next { right: calc(50% - 110px); }
 
-/* Dots — below the banner */
-.hs-dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+/* Dots — in a slim bar just below the banner, so they never cover banner text */
+.hs-dots {
+  display: flex; justify-content: center; align-items: center; gap: 8px;
+  height: var(--hs-bar);
+}
 .hs-dot {
   width: 10px; height: 10px; border-radius: 999px; border: 0; padding: 0; cursor: pointer;
-  background: #c8d0e4; transition: width .3s ease, background .3s ease;
+  background: rgba(255, 255, 255, .5); transition: width .3s ease, background .3s ease;
 }
-.hs-dot:hover { background: var(--kfs-navy); }
+.hs-dot:hover { background: #fff; }
 .hs-dot.is-active { width: 30px; background: var(--kfs-red); }
 
+/* Phones: arrows sit beside the dots below the banner so they never cover its text */
 @media (max-width: 640px) {
-  .hs { padding-block: 16px 14px; }
-  .hs-frame { padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); }
-  .hs-img { border-radius: 10px; }
-  .hs-arrow { width: 34px; height: 34px; top: auto; bottom: -46px; transform: none; }
-  .hs-prev { left: 0; }
-  .hs-next { right: 0; }
-  .hs-arrow svg { width: 16px; height: 16px; }
-  .hs-dots { margin-top: 24px; min-height: 34px; align-items: center; }
-  .hs-missing { min-height: 200px; font-size: .95rem; }
+  .hs { --hs-bar: 52px; background: var(--kfs-soft); }
+  .hs-track { min-height: 0; }
+  .hs-prev { left: max(12px, env(safe-area-inset-left, 0px)); }
+  .hs-next { right: max(12px, env(safe-area-inset-right, 0px)); }
+  .hs-dot { background: #c8d0e4; }
+  .hs-missing { color: var(--kfs-navy); border-color: #c8d0e4; }
+  .hs-missing code { color: var(--kfs-navy); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hs-slide, .hs-dot, .hs-arrow { transition: none; }

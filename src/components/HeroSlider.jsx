@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { heroSlides } from '../data/home.js'
 
 const AUTOPLAY_MS = 6000
@@ -14,7 +14,13 @@ function SlideImage({ slide }) {
       </div>
     )
   }
-  return <img src={slide.image} alt={slide.alt} className="hs-img" onError={() => setMissing(true)} />
+  // The full banner is always shown (never cropped). Spare space at the sides
+  // is filled with a soft, blurred copy of the same banner.
+  return (
+    <div className="hs-imgwrap" style={{ '--hs-bg': `url(${slide.image})` }}>
+      <img src={slide.image} alt={slide.alt} className="hs-img" onError={() => setMissing(true)} />
+    </div>
+  )
 }
 
 function PosterSlide({ slide }) {
@@ -50,6 +56,21 @@ export default function HeroSlider() {
   const count = heroSlides.length
 
   const go = useCallback((i) => setIndex((i + count) % count), [count])
+  const sectionRef = useRef(null)
+
+  // Measure the real header height (it changes with screen size and browser zoom)
+  // so the slider always fits in the window below it.
+  useEffect(() => {
+    const header = document.querySelector('.nav-header')
+    const update = () => {
+      if (header && sectionRef.current) {
+        sectionRef.current.style.setProperty('--hs-header', `${header.offsetHeight}px`)
+      }
+    }
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [])
 
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -61,6 +82,7 @@ export default function HeroSlider() {
   return (
     <section
       className="hs"
+      ref={sectionRef}
       aria-roledescription="carousel"
       aria-label="Admissions"
       onMouseEnter={() => setPaused(true)}
