@@ -6,6 +6,8 @@ import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
 import Faqs from './pages/Faqs.jsx'
 import Clients from './pages/Clients.jsx'
+import ProgramDetail from './pages/ProgramDetail.jsx'
+import Scholarship from './pages/Scholarship.jsx'
 
 // Pages still being prepared show the "We're updating this page" message (<InProgress />).
 // When a page is ready, import it above and use it in place of <InProgress />.
@@ -17,8 +19,8 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="programs" element={<InProgress />} />
-        <Route path="programs/:slug" element={<InProgress />} />
-        <Route path="scholarship" element={<InProgress />} />
+        <Route path="programs/:slug" element={<ProgramDetail />} />
+        <Route path="scholarship" element={<Scholarship />} />
         <Route path="test-prep" element={<InProgress />} />
         <Route path="clients" element={<Clients />} />
         <Route path="faqs" element={<Faqs />} />

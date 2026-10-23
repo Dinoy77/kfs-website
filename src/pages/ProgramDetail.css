@@ -1,0 +1,86 @@
+/* Program pages — shared layout for every program. Uses the tokens from Home.css */
+.pd { padding-block: 72px 88px; background: #fff; }
+.pd-grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.3fr); gap: 64px; align-items: start; }
+
+/* Left column stays in view while the content scrolls */
+.pd-side { position: sticky; top: 150px; display: grid; gap: 28px; }
+.pd-photos { max-width: 480px; }
+.pd-card {
+  display: grid; gap: 10px; padding: 24px; border-radius: 14px;
+  background: var(--kfs-soft); border: 1px solid #dfe4f0; border-top: 4px solid var(--kfs-red);
+}
+.pd-card h2 { color: var(--kfs-navy); font-size: 1.2rem; margin: 0; }
+.pd-card p { color: #4a5675; margin: 0 0 6px; }
+.pd-card .ap-btn { width: 100%; }
+
+/* Content */
+.pd-main { min-width: 0; }
+.pd-headline {
+  color: var(--kfs-navy); font-size: clamp(1.8rem, 3.4vw, 2.5rem); font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.12; margin: 0 0 16px; text-wrap: balance;
+}
+.pd-intro { color: #4a5675; font-size: 1.12rem; line-height: 1.7; margin: 0 0 8px; max-width: 65ch; }
+.pd-block { margin-top: 44px; }
+.pd-h2 { color: var(--kfs-navy); font-size: 1.55rem; font-weight: 800; margin: 0 0 18px; }
+.pd-text { color: #4a5675; line-height: 1.7; margin: 16px 0 0; max-width: 65ch; }
+
+/* Benefit cards */
+.pd-features { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.pd-features li {
+  display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px;
+  border: 1px solid #dfe4f0; border-radius: 12px; background: #fff;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.pd-features li:hover { border-color: var(--kfs-red); box-shadow: 0 10px 24px rgba(18, 39, 94, .08); }
+.pd-check {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--kfs-red); color: #fff;
+}
+.pd-features h3 { color: var(--kfs-navy); font-size: 1.1rem; margin: 4px 0 4px; }
+.pd-features p { color: #4a5675; margin: 0; line-height: 1.6; }
+
+/* Numbered steps — a real sequence, so numbers are meaningful here */
+.pd-steps {
+  list-style: none; margin: 0; padding: 0; counter-reset: step;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px;
+}
+.pd-steps li {
+  counter-increment: step; position: relative; display: grid; gap: 10px; align-content: start;
+  padding: 18px 16px; border-radius: 12px; background: var(--kfs-navy); color: #fff; font-weight: 600; line-height: 1.35;
+}
+.pd-steps li::before {
+  content: counter(step); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--kfs-red); color: #fff; font: 800 1rem var(--font-display);
+}
+
+/* Other programs */
+.pd-others { padding-block: 72px; background: var(--kfs-soft); }
+.pd-others .ab-title { text-align: center; margin-bottom: 32px; }
+.pd-other-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.pd-other-list a {
+  display: grid; gap: 6px; height: 100%; padding: 20px 22px; border-radius: 12px; text-decoration: none;
+  background: #fff; border: 1px solid #dfe4f0; border-left: 4px solid var(--kfs-red);
+  transition: border-color .2s ease, transform .2s ease;
+}
+.pd-other-list a:hover { border-color: var(--kfs-navy); border-left-color: var(--kfs-red); transform: translateY(-2px); }
+.pd-other-title { color: var(--kfs-navy); font: 700 1.05rem/1.3 var(--font-display); }
+.pd-other-text { color: #4a5675; font-size: .95rem; }
+
+@media (max-width: 1024px) {
+  .pd-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pd-other-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 960px) {
+  .pd-grid { grid-template-columns: 1fr; gap: 40px; }
+  .pd-side { position: static; order: 2; }
+  .pd-photos { justify-self: center; width: 100%; }
+}
+@media (max-width: 640px) {
+  .pd, .pd-others { padding-block: 52px; }
+  .pd-features li { padding: 16px; gap: 12px; }
+  .pd-other-list { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pd-features li, .pd-other-list a { transition: none; }
+  .pd-other-list a:hover { transform: none; }
+}

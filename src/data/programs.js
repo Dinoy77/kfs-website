@@ -1,95 +1,106 @@
-// Programs carried over from the old site's "Services" menu.
-// `draft: true` = the old site had little or no text for this page;
-// replace `body` with the team's real content before launch.
+// Programs (the "Services" menu).
+// Every program needs: slug (used in the web address), title and summary.
+// A program gets its full page once it has a `page` block. Programs without one
+// show the "We're updating this page" message until their content is added.
+//
+// `page` blocks:
+//   headline  – big heading at the top of the content
+//   intro     – opening paragraph
+//   sections  – list of blocks, each one of:
+//     { type: 'features', heading, items: [{ title, text }] }   → benefit cards
+//     { type: 'steps',    heading, items: ['…'], text }         → numbered steps
+//     { type: 'text',     heading, text }                       → heading + paragraph
 
 export const programs = [
+  {
+    slug: 'students-scholarship-program',
+    title: 'Students Scholarship Program',
+    summary: 'B-Pharm Lateral Entry with 100% scholarship through Government assistance.',
+    link: '/scholarship', // has its own page, not a /programs/ page
+  },
   {
     slug: 'industry-integrated-academic-program',
     title: 'Industry Integrated Academic Program',
     summary: 'Your academic course, taught alongside real industry practice.',
-    body: [
-      {
-        text: 'An education program that combines the academic curriculum with real-world industry practice. It closes the gap between what you learn in class and what employers expect on day one, so you graduate with both the theory and the practical experience.',
-      },
-    ],
   },
   {
     slug: 'pay-after-placement-program',
     title: 'Pay After Placement Program',
     summary: 'Train now. Pay the course fee only after you get a job.',
-    body: [
-      {
-        text: 'We know paying fees during your studies is hard. In this program you enroll, complete the training and get placed — and only then repay the program fee through a convenient payment plan.',
-      },
-      {
-        heading: 'What you get',
-        list: [
-          'Placement guarantee — a real opportunity to use your new skills in a professional setting.',
-          'Flexible payment — focus on your studies without paying tuition upfront.',
-          'Industry-relevant training — a curriculum built with industry experts around current job-market needs.',
-          'Professional development — soft skills, resume building and interview preparation.',
-          'Career support — job placement help, networking opportunities and guidance through your job search.',
-        ],
-      },
-      {
-        heading: 'How it works',
-        steps: ['Enroll in the program', 'Complete the training', 'Get placed', 'Repay the fee in instalments'],
-      },
-      {
-        text: 'Whether you are a recent graduate starting your career or a professional looking for a new direction, the program gives you the skills, the opportunity and the financial room to get there.',
-      },
-    ],
+    page: {
+      headline: 'Unlocking career opportunities with guaranteed placement success',
+      intro:
+        'At the Pay After Placement Program, we understand the importance of a rewarding career after education. Our program gives you comprehensive training and education, with the unique benefit of paying only after you secure a successful placement.',
+      sections: [
+        {
+          type: 'features',
+          heading: 'Why choose us?',
+          items: [
+            {
+              title: 'Placement guarantee',
+              text: 'We stand by our commitment to your career success. The program comes with a placement guarantee, so you get the opportunity to apply your new skills in a professional setting.',
+            },
+            {
+              title: 'Flexible payment',
+              text: 'We know the financial challenges students face during their education. Our Pay After Placement model lets you focus on your studies without paying tuition fees upfront.',
+            },
+            {
+              title: 'Industry-relevant training',
+              text: 'Our curriculum is built with industry experts, giving you practical, up-to-date skills that match what the job market needs.',
+            },
+            {
+              title: 'Professional development',
+              text: 'Beyond technical skills, we focus on soft skills, resume building and interview preparation to improve your overall employability.',
+            },
+            {
+              title: 'Dedicated career support',
+              text: 'We offer ongoing career support, including job placement assistance, networking opportunities and guidance to help you navigate the job market.',
+            },
+          ],
+        },
+        {
+          type: 'steps',
+          heading: 'How it works',
+          items: ['Enroll in the program', 'Complete the training', 'Get placed in a job', 'Repay the fees in easy instalments'],
+          text: 'Once you have started your career, you repay the program fees through a convenient payment plan. Your success is our success, and we support you throughout your journey.',
+        },
+        {
+          type: 'text',
+          heading: 'Your path to a brighter future',
+          text: 'Whether you are a recent graduate starting your career or a professional looking for a new direction, the Pay After Placement Program gives you the skills, the opportunities and the financial flexibility to reach your goals.',
+        },
+      ],
+    },
   },
   {
     slug: 'international-university-collaborative-program',
     title: 'International University Collaborative Program',
     summary: 'Study through partnerships between universities across borders.',
-    body: [
-      {
-        text: 'A global education program built on partnerships between universities in different countries. Students get a broader, more diverse learning experience by drawing on the strengths of several institutions.',
-      },
-    ],
   },
   {
     slug: 'training-and-placement',
     title: 'Training and Placement',
     summary: 'Job-ready training followed by placement support.',
-    draft: true,
-    body: [{ text: 'Content to be added by the KFS team.' }],
   },
   {
     slug: 'train-the-trainer-program',
     title: 'Train the Trainer Program',
     summary: 'Prepare professionals to teach and lead training sessions.',
-    draft: true,
-    body: [{ text: 'Content to be added by the KFS team.' }],
   },
   {
     slug: 'online-coaching-management',
     title: 'Online Coaching Management',
     summary: 'A platform that runs online coaching end to end.',
-    body: [
-      {
-        text: 'A platform for running online coaching efficiently: simple interfaces and tools that handle administration, deliver course content and keep students engaged.',
-      },
-    ],
   },
   {
     slug: 'career-planning-and-mapping',
     title: 'Career Planning & Mapping',
     summary: 'Find the right career path, backed by psychometric assessment.',
-    body: [
-      {
-        text: 'We use scientifically validated psychometric assessments to understand a student’s abilities, personality and working style — then map that to a realistic career path and the steps to get there.',
-      },
-    ],
   },
   {
     slug: 'students-internship',
     title: 'Students Internship',
     summary: 'Internships that give you real work experience before you graduate.',
-    draft: true,
-    body: [{ text: 'Content to be added by the KFS team.' }],
   },
 ]
 

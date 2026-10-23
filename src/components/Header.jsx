@@ -11,8 +11,7 @@ const menu = [
   {
     label: 'Services',
     children: [
-      { label: 'Students Scholarship Program', to: '/scholarship' },
-      ...programs.map((p) => ({ label: p.title, to: `/programs/${p.slug}` })),
+      ...programs.map((p) => ({ label: p.title, to: p.link || `/programs/${p.slug}` })),
     ],
   },
   {

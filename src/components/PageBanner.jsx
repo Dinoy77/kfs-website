@@ -3,7 +3,7 @@ import './PageBanner.css'
 
 // Top banner for inner pages: title + breadcrumb.
 // Pass `image` to show a photo behind the navy overlay.
-export default function PageBanner({ title, crumb, image }) {
+export default function PageBanner({ title, crumb, image, parent }) {
   return (
     <section
       className={`pb ${image ? 'has-image' : ''}`}
@@ -14,6 +14,7 @@ export default function PageBanner({ title, crumb, image }) {
         <nav aria-label="Breadcrumb">
           <ol className="pb-crumbs">
             <li><Link to="/">Home</Link></li>
+            {parent && <li><Link to={parent.to}>{parent.label}</Link></li>}
             <li aria-current="page">{crumb || title}</li>
           </ol>
         </nav>
