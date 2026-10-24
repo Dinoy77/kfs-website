@@ -87,8 +87,8 @@ export default function ProgramDetail() {
           {/* Left: photos + enquiry card (stay in view while scrolling) */}
           <aside className="pd-side">
             <div className="ab-photos pd-photos">
-              <Photo src={homeAbout.imageBack} className="ab-back" />
-              <Photo src={homeAbout.imageFront} className="ab-front" />
+              <Photo key={`b-${slug}`} src={page.photos?.back || homeAbout.imageBack} className="ab-back" />
+              <Photo key={`f-${slug}`} src={page.photos?.front || homeAbout.imageFront} className="ab-front" />
             </div>
             <div className="pd-card">
               <h2>Enquire about this program</h2>
