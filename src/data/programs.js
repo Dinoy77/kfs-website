@@ -221,6 +221,51 @@ export const programs = [
     slug: 'train-the-trainer-program',
     title: 'Train the Trainer Program',
     summary: 'Prepare professionals to teach and lead training sessions.',
+    page: {
+      // Same two photos as the old website used for this page
+      photos: { back: '/img/iiap-1.jpg', front: '/img/iiap-2.jpg' },
+      headline: 'Empowering trainers, transforming lives',
+      intro:
+        'The Train the Trainer Program is about excellence in training and development. It gives trainers the skills, knowledge and resources they need to deliver impactful, transformative training.',
+      sections: [
+        {
+          type: 'features',
+          heading: 'Why choose us?',
+          items: [
+            {
+              title: 'Complete training curriculum',
+              text: 'A curriculum covering a wide range of training methods, techniques and best practices, so you gain diverse skills as a trainer.',
+            },
+            {
+              title: 'Experienced facilitators',
+              text: 'Learn from experienced trainers and facilitators who bring practical knowledge and industry insights to the program.',
+            },
+            {
+              title: 'Interactive learning',
+              text: 'Engaging sessions that simulate real training situations, so you can apply what you learn in practice.',
+            },
+            {
+              title: 'Professional development',
+              text: 'Beyond training techniques, you build communication, leadership and adaptability — skills every effective trainer needs.',
+            },
+            {
+              title: 'Networking opportunities',
+              text: 'Connect with a community of trainers, share experiences and build a professional network that lasts beyond the program.',
+            },
+          ],
+        },
+        {
+          type: 'text',
+          heading: 'Our training approach',
+          text: 'We focus on both the art and the science of effective training. You will learn to design engaging training programs, adapt to different learning styles and use new methods that help learners understand and remember.',
+        },
+        {
+          type: 'text',
+          heading: 'Join the training revolution',
+          text: 'Whether you are an aspiring trainer or an experienced professional looking to improve your skills, join the Train the Trainer Program. Grow your training abilities, inspire learners and make a lasting impact on people and organisations.',
+        },
+      ],
+    },
   },
   {
     slug: 'online-coaching-management',

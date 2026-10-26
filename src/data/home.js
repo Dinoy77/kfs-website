@@ -1,34 +1,75 @@
-// Home page banner slides.
-// Each slide is one banner image saved in public/img/.
-// `alt` is read out by screen readers and by Google, so keep it matching the banner text.
+import { whatsappLink } from './site.js'
+
+// Home page slider. Each slide is designed in code — change the text here.
+//   theme   – 'navy', 'light' or 'red' background
+//   tags    – small labels at the top (first one red)
+//   visual  – { type: 'photo', src, alt, badgeTitle, badgeText, chip }
+//             or { type: 'stats', items: [{ big, small }] }
+//   buttons – first button is the main (filled) one
 
 export const heroSlides = [
-  // Slide 1: portrait poster shown inside a wide slide, with the key details in English
   {
     id: 'bpharm-spot',
-    type: 'poster',
-    image: '/img/bpharm-spot.jpg',
-    alt: 'B Pharmacy spot allotment at government fees poster (Malayalam). Seats limited. Contact 7736025600 or 0471-2297600.',
-    tag: 'Spot allotment',
+    theme: 'navy',
+    tags: ['Spot allotment', 'Seats limited'],
     title: 'B Pharmacy Spot Allotment',
-    lead: 'Admission at Government fees',
+    highlight: 'Admission at Government fees',
     text: 'For students who did not get a B Pharm allotment through KEAM, have not got admission in Kerala yet, or did not write KEAM.',
-    badge: 'Seats limited',
-    phones: [
-      { display: '77360 25600', tel: '+917736025600' },
-      { display: '0471-229 7600', tel: '+914712297600' },
+    buttons: [
+      { label: 'Call 77360 25600', href: 'tel:+917736025600' },
+      { label: 'Call 0471-229 7600', href: 'tel:+914712297600' },
     ],
     note: 'Approved by PCI, DME and Kerala PSC. Affiliated to KUHS.',
+    visual: {
+      type: 'photo',
+      src: '/img/scholarship.jpg',
+      alt: 'Pharmacy student in a white coat holding a book',
+      badgeTitle: 'Govt. fees',
+      badgeText: 'B Pharmacy admission',
+    },
   },
   {
-    id: 'bpharm',
-    image: '/img/bpharm.jpg',
-    alt: 'B-Pharm Lateral Entry. Complete your education free of cost. 100% scholarship with Government assistance for SC, ST, OEC, OBC-H and Fishermen students. Free laptop included. Interested students contact +91 77360 25600.',
+    id: 'bpharm-lateral',
+    theme: 'light',
+    tags: ['B-Pharm Lateral Entry', '100% Scholarship'],
+    title: 'Complete your B-Pharm free of cost',
+    highlight: 'With Central and State Government assistance',
+    text: 'For D-Pharm passed students. Tuition fees, hostel fees and a monthly stipend are covered.',
+    chipsLabel: 'Eligible categories',
+    chips: ['SC', 'ST', 'OEC', 'OBC-H', 'Fishermen'],
+    buttons: [
+      { label: 'Call +91 77360 25600', href: 'tel:+917736025600' },
+      { label: 'View details', href: '/scholarship' },
+    ],
+    visual: {
+      type: 'photo',
+      src: '/img/girl-medical.png',
+      alt: 'Pharmacy student in a white coat holding a folder',
+      badgeTitle: '100%',
+      badgeText: 'Scholarship',
+      chip: 'Free laptop',
+    },
   },
   {
     id: 'mba',
-    image: '/img/mba.jpg',
-    alt: 'MBA Earn and Learn. Get your MBA degree while doing a full-time job in Bangalore. 2-year full-time MBA, up to 2 years of experience and up to 2 years of salary.',
+    theme: 'red',
+    tags: ['MBA', 'Earn and Learn'],
+    title: 'Get your MBA while you work',
+    highlight: 'Full-time job in Bangalore + MBA degree',
+    text: 'Study a 2-year full-time MBA and build your career at the same time.',
+    points: ['2-year full-time MBA', 'Up to 2 years of work experience', 'Up to 2 years of salary'],
+    buttons: [
+      { label: 'Call +91 77360 25600', href: 'tel:+917736025600' },
+      { label: 'WhatsApp us', href: whatsappLink('Hi, I want to know about the MBA Earn and Learn program') },
+    ],
+    visual: {
+      type: 'stats',
+      items: [
+        { big: '2 yrs', small: 'MBA degree' },
+        { big: '2 yrs', small: 'Work experience' },
+        { big: '2 yrs', small: 'Salary' },
+      ],
+    },
   },
 ]
 

@@ -1,51 +1,98 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { heroSlides } from '../data/home.js'
+import './HeroSlider.css'
 
-const AUTOPLAY_MS = 6000
+// Home page slider. Every slide is designed in code (no banner images),
+// so the text is sharp, readable on phones and easy to change in data/home.js.
 
-function SlideImage({ slide }) {
+const AUTOPLAY_MS = 7000
+
+function Photo({ visual }) {
   const [missing, setMissing] = useState(false)
-
-  if (missing) {
-    // Shown only while the banner file hasn't been added to public/img/ yet
-    return (
-      <div className="hs-missing">
-        Add the banner image at <code>public{slide.image}</code>
-      </div>
-    )
-  }
-  // The full banner is always shown (never cropped). Spare space at the sides
-  // is filled with a soft, blurred copy of the same banner.
   return (
-    <div className="hs-imgwrap" style={{ '--hs-bg': `url(${slide.image})` }}>
-      <img src={slide.image} alt={slide.alt} className="hs-img" onError={() => setMissing(true)} />
+    <div className="hx-photo">
+      {missing ? (
+        <span className="hx-missing">Add <code>public{visual.src}</code></span>
+      ) : (
+        <img src={visual.src} alt={visual.alt} onError={() => setMissing(true)} />
+      )}
+      {visual.badgeTitle && (
+        <div className="hx-badge">
+          <strong>{visual.badgeTitle}</strong>
+          <span>{visual.badgeText}</span>
+        </div>
+      )}
+      {visual.chip && <div className="hx-chip">{visual.chip}</div>}
     </div>
   )
 }
 
-function PosterSlide({ slide }) {
+function Stats({ visual }) {
   return (
-    <div className="hs-poster">
-      <div className="hs-poster-copy">
-        <div className="hs-poster-tags">
-          <p className="hs-poster-tag">{slide.tag}</p>
-          <p className="hs-poster-tag is-alt">{slide.badge}</p>
+    <ul className="hx-stats">
+      {visual.items.map((s) => (
+        <li key={s.small}>
+          <strong>{s.big}</strong>
+          <span>{s.small}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+// Keep words like "B-Pharm" on one line (never break at the hyphen)
+function NoBreak({ text }) {
+  return text.split(' ').map((w, i) => (
+    <span key={i}>{i > 0 && ' '}{w.includes('-') ? <span className="hx-nowrap">{w}</span> : w}</span>
+  ))
+}
+
+function Slide({ s, active }) {
+  return (
+    <div className={`hx-slide hx-${s.theme} ${active ? 'is-active' : ''}`}>
+      <div className="wrap hx-grid">
+        <div className="hx-copy">
+          <div className="hx-tags">
+            {s.tags.map((t, i) => (
+              <span key={t} className={`hx-tag ${i > 0 ? 'is-alt' : ''}`}>{t}</span>
+            ))}
+          </div>
+          <h2 className="hx-title"><NoBreak text={s.title} /></h2>
+          <p className="hx-highlight">{s.highlight}</p>
+          <p className="hx-text">{s.text}</p>
+
+          {s.chips && (
+            <ul className="hx-chips" aria-label={s.chipsLabel}>
+              {s.chips.map((c) => <li key={c}>{c}</li>)}
+            </ul>
+          )}
+
+          {s.points && (
+            <ul className="hx-points">
+              {s.points.map((p) => <li key={p}>{p}</li>)}
+            </ul>
+          )}
+
+          <div className="hx-buttons">
+            {s.buttons.map((b, i) => {
+              const cls = `hx-btn ${i === 0 ? 'is-main' : ''}`
+              const tab = active ? 0 : -1
+              // Pages on this website open with the router; phone and WhatsApp links open normally
+              if (b.href.startsWith('/')) {
+                return <Link key={b.label} to={b.href} className={cls} tabIndex={tab}>{b.label}</Link>
+              }
+              const ext = b.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {}
+              return <a key={b.label} href={b.href} className={cls} tabIndex={tab} {...ext}>{b.label}</a>
+            })}
+          </div>
+          {s.note && <p className="hx-note">{s.note}</p>}
         </div>
-        <h2 className="hs-poster-title">{slide.title}</h2>
-        <p className="hs-poster-lead">{slide.lead}</p>
-        <p className="hs-poster-text">{slide.text}</p>
-        <div className="hs-poster-phones">
-          {slide.phones.map((p, i) => (
-            <a key={p.tel} href={`tel:${p.tel}`} className={i === 0 ? 'is-main' : ''}>
-              Call {p.display}
-            </a>
-          ))}
+
+        <div className={`hx-visual is-${s.visual.type}`}>
+          {s.visual.type === 'stats' ? <Stats visual={s.visual} /> : <Photo visual={s.visual} />}
         </div>
-        <p className="hs-poster-note">{slide.note}</p>
       </div>
-      <a className="hs-poster-img" href={slide.image} target="_blank" rel="noreferrer" aria-label="Open the full poster">
-        <img src={slide.image} alt={slide.alt} />
-      </a>
     </div>
   )
 }
@@ -54,17 +101,15 @@ export default function HeroSlider() {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const count = heroSlides.length
-
   const go = useCallback((i) => setIndex((i + count) % count), [count])
   const sectionRef = useRef(null)
 
-  // Measure the real header height (it changes with screen size and browser zoom)
-  // so the slider always fits in the window below it.
+  // Measure the real header height so the slider fits in the window below it
   useEffect(() => {
     const header = document.querySelector('.nav-header')
     const update = () => {
       if (header && sectionRef.current) {
-        sectionRef.current.style.setProperty('--hs-header', `${header.offsetHeight}px`)
+        sectionRef.current.style.setProperty('--hx-header', `${header.offsetHeight}px`)
       }
     }
     update()
@@ -81,56 +126,52 @@ export default function HeroSlider() {
 
   return (
     <section
-      className="hs"
+      className="hx"
       ref={sectionRef}
       aria-roledescription="carousel"
       aria-label="Admissions"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
     >
-      <div className="hs-frame">
-      <div className="hs-track">
+      <div className="hx-track">
         {heroSlides.map((s, i) => (
           <div
             key={s.id}
-            className={`hs-slide ${i === index ? 'is-active' : ''}`}
+            className="hx-item"
             role="group"
             aria-roledescription="slide"
             aria-label={`${i + 1} of ${count}`}
             aria-hidden={i !== index}
           >
-            {s.type === 'poster' ? <PosterSlide slide={s} /> : <SlideImage slide={s} />}
+            <Slide s={s} active={i === index} />
           </div>
         ))}
-        {count > 1 && (
-          <>
-          <button type="button" className="hs-arrow hs-prev" onClick={() => go(index - 1)} aria-label="Previous slide">
-            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2.5" /></svg>
-          </button>
-          <button type="button" className="hs-arrow hs-next" onClick={() => go(index + 1)} aria-label="Next slide">
-            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2.5" /></svg>
-          </button>
-          </>
-        )}
       </div>
 
       {count > 1 && (
-        <>
-          <div className="hs-dots">
+        <div className="hx-bar">
+          <button type="button" className="hx-arrow" onClick={() => go(index - 1)} aria-label="Previous slide">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2.5" /></svg>
+          </button>
+          <div className="hx-dots">
             {heroSlides.map((s, i) => (
               <button
                 key={s.id}
                 type="button"
-                className={`hs-dot ${i === index ? 'is-active' : ''}`}
+                className={`hx-dot ${i === index ? 'is-active' : ''}`}
                 aria-label={`Show slide ${i + 1}`}
                 aria-current={i === index}
                 onClick={() => go(i)}
               />
             ))}
           </div>
-        </>
+          <button type="button" className="hx-arrow" onClick={() => go(index + 1)} aria-label="Next slide">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2.5" /></svg>
+          </button>
+        </div>
       )}
-      </div>
     </section>
   )
 }
