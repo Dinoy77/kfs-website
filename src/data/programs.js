@@ -271,16 +271,156 @@ export const programs = [
     slug: 'online-coaching-management',
     title: 'Online Coaching Management',
     summary: 'A platform that runs online coaching end to end.',
+    page: {
+      // Same two photos as the old website used for this page
+      photos: { back: '/img/iiap-1.jpg', front: '/img/iiap-2.jpg' },
+      headline: 'Empowering learners through seamless online coaching',
+      intro:
+        'Online Coaching Management is changing the way people learn, through innovative online coaching. Our platform connects students with expert coaches, giving personal and flexible learning that supports academic success and personal growth.',
+      sections: [
+        {
+          type: 'features',
+          heading: 'Why choose us?',
+          items: [
+            {
+              title: 'Expert coaches',
+              text: 'A team of skilled, experienced coaches across many subjects, from academics to skill development, dedicated to helping you reach your full potential.',
+            },
+            {
+              title: 'Personalised learning',
+              text: 'Every learner is different. Coaching is tailored to your needs, with personal attention and guidance for the best results.',
+            },
+            {
+              title: 'Flexible scheduling',
+              text: 'Life is busy. Join coaching sessions at a time that suits you, from anywhere in the world.',
+            },
+            {
+              title: 'Interactive learning',
+              text: 'Engaging, dynamic sessions with tools for real-time collaboration, discussion forums and multimedia resources.',
+            },
+            {
+              title: 'Progress tracking',
+              text: 'Track your achievements, set goals and see how you improve over time.',
+            },
+          ],
+        },
+        {
+          type: 'text',
+          heading: 'Our approach to online coaching',
+          text: 'We build a supportive, interactive online learning community. You can choose coaches based on their expertise, schedule sessions and use resources that help you understand each subject better. The platform makes communication between coaches and learners easy and effective.',
+        },
+        {
+          type: 'text',
+          heading: 'Join the online learning revolution',
+          text: 'Whether you are a student aiming for academic excellence, a professional building new skills or someone focused on personal development, join Online Coaching Management. Experience convenient, flexible and effective coaching, and start a journey of continuous learning and growth.',
+        },
+      ],
+    },
   },
   {
     slug: 'career-planning-and-mapping',
     title: 'Career Planning & Mapping',
     summary: 'Find the right career path, backed by psychometric assessment.',
+    page: {
+      // Same two photos as the old website used for this page
+      photos: { back: '/img/iiap-1.jpg', front: '/img/iiap-2.jpg' },
+      headline: 'Your strategic partner in career development',
+      intro:
+        'A well-defined career path is the foundation for personal and professional success. Career Planning & Mapping gives you the tools and insights to navigate the changing world of careers with confidence.',
+      sections: [
+        {
+          type: 'features',
+          heading: 'Why choose us?',
+          items: [
+            {
+              title: 'Expert guidance',
+              text: 'Our career experts and counsellors bring years of experience, with guidance tailored to your strengths and goals.',
+            },
+            {
+              title: 'Complete assessments',
+              text: 'Modern psychometric assessments and tools look closely at your skills, interests and values to find the career paths that suit you best.',
+            },
+            {
+              title: 'Strategic planning',
+              text: 'We work with you to create a career plan, with short-term and long-term goals that match your vision.',
+            },
+            {
+              title: 'Professional development',
+              text: 'Skill development workshops, training sessions and resources that improve your professional abilities and employability.',
+            },
+            {
+              title: 'Industry insights',
+              text: 'Stay up to date on market trends, the job market and industry requirements through regular updates and resources.',
+            },
+            {
+              title: 'Continuous support',
+              text: 'Career development is an ongoing process. We support you all the way, so you stay on track as your field changes.',
+            },
+          ],
+        },
+        {
+          type: 'steps',
+          heading: 'Our approach to career planning',
+          items: ['In-depth assessment', 'Find your strengths and areas to improve', 'Build your career plan together', 'Ongoing support as you grow'],
+          text: 'Our approach is based on understanding your goals and the changing job market. We start with in-depth assessments to find your strengths, preferences and areas to improve. On that foundation, we create a career plan together that fits your goals and what employers need today.',
+        },
+        {
+          type: 'text',
+          heading: 'Empowering your journey',
+          text: 'Whether you are a student exploring career options, a professional looking for a career change or someone aiming for continuous growth, Career Planning & Mapping is your partner. Join us to unlock your full potential and find your path to success.',
+        },
+      ],
+    },
   },
   {
     slug: 'students-internship',
     title: 'Students Internship',
     summary: 'Internships that give you real work experience before you graduate.',
+    page: {
+      // Same two photos as the old website used for this page
+      photos: { back: '/img/iiap-1.jpg', front: '/img/iiap-2.jpg' },
+      headline: 'Empowering future professionals through real-world experience',
+      intro:
+        'We believe in the power of hands-on experience. The Students Internship Program gives students valuable insights, practical skills and exposure to the professional world, preparing them for successful careers in their chosen fields.',
+      sections: [
+        {
+          type: 'features',
+          heading: 'Why choose us?',
+          items: [
+            {
+              title: 'Industry connections',
+              text: 'Partnerships with a wide range of companies and organisations give you the chance to intern in reputable, forward-thinking workplaces.',
+            },
+            {
+              title: 'Real-world learning',
+              text: 'Gain practical experience beyond the classroom, with hands-on exposure to real industry practices and challenges.',
+            },
+            {
+              title: 'Mentorship and guidance',
+              text: 'Experienced professionals guide and support you throughout your internship, with valuable insights and career advice.',
+            },
+            {
+              title: 'Professional development',
+              text: 'Workshops, seminars and training sessions build both your technical skills and the soft skills you need at work.',
+            },
+            {
+              title: 'Networking opportunities',
+              text: 'Connect with professionals, attend industry events and build a network of contacts in your field of interest.',
+            },
+          ],
+        },
+        {
+          type: 'text',
+          heading: 'Internship opportunities',
+          text: 'Whether you are studying business, technology, design or any other field, the program offers a wide range of opportunities, from startups to multinational companies. Our goal is to match you with an internship that fits your career goals and academic background.',
+        },
+        {
+          type: 'text',
+          heading: 'Your path to professional growth',
+          text: 'Join the Students Internship Program and start a journey of professional growth and discovery. We give you the tools and experience you need to excel in your future career. Invest in your success by gaining valuable hands-on experience through our internships.',
+        },
+      ],
+    },
   },
 ]
 
