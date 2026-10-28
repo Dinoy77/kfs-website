@@ -1,0 +1,46 @@
+/* Services overview page — card styles come from Home.css (.sv-*) */
+.pg-intro { padding-block: 64px 8px; background: #fff; }
+.pg-intro-inner { text-align: center; max-width: 760px; }
+.pg-lead { margin: 16px auto 0; color: #4a5675; font-size: 1.08rem; line-height: 1.7; max-width: 62ch; }
+
+/* Scholarship highlight */
+.pg-feature-wrap { padding-top: 40px; background: #fff; }
+.pg-feature {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 40px;
+  padding: 36px 40px; border-radius: 18px; color: #fff;
+  background: radial-gradient(circle at 90% 10%, rgba(198, 40, 40, .45), transparent 50%), var(--kfs-navy);
+  border-left: 6px solid var(--kfs-red);
+}
+.pg-feature > div:first-child { flex: 1 1 420px; }
+.pg-feature-tag {
+  display: inline-block; margin: 0 0 10px; padding: 5px 12px; border-radius: 999px;
+  background: #ffd400; color: var(--kfs-navy); font-weight: 800; font-size: .8rem; letter-spacing: .05em; text-transform: uppercase;
+}
+.pg-feature-title { margin: 0 0 8px; color: #fff; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; }
+.pg-feature-text { margin: 0; color: #c9d2ea; line-height: 1.6; max-width: 60ch; }
+.pg-feature-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.pg-btn-white { background: #fff; color: var(--kfs-navy); border-color: #fff; }
+.pg-btn-white:hover { background: var(--kfs-red); border-color: var(--kfs-red); color: #fff; }
+.pg-btn-line { border-color: rgba(255, 255, 255, .6); color: #fff; }
+.pg-btn-line:hover { background: #fff; color: var(--kfs-navy); }
+
+.pg-list { padding-top: 40px; }
+/* 8 programs: 4 per row on wide screens, so the grid has no gaps */
+@media (min-width: 1101px) {
+  .pg-list .sv-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .pg-list .sv-card { padding: 28px 22px; }
+  .pg-list .sv-card-title { font-size: 1.15rem; }
+}
+
+@media (min-width: 961px) and (max-width: 1100px) {
+  .pg-list .sv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 960px) {
+  .pg-list .sv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; }
+}
+@media (max-width: 640px) {
+  .pg-intro { padding-top: 48px; }
+  .pg-feature { padding: 26px 22px; }
+  .pg-feature-actions, .pg-feature-actions .ap-btn { width: 100%; }
+  .pg-list .sv-grid { grid-template-columns: 1fr; }
+}
