@@ -79,6 +79,10 @@ export default function Footer() {
 
       <div className="wrap ft-base">
         <p>© {year} {site.name}. All rights reserved.</p>
+        <p className="ft-legal">
+          <Link to="/terms-and-conditions">Terms and Conditions</Link>
+          <Link to="/privacy-policy">Privacy Policy</Link>
+        </p>
       </div>
     </footer>
   )

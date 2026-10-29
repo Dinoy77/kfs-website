@@ -10,6 +10,8 @@ import ProgramDetail from './pages/ProgramDetail.jsx'
 import Scholarship from './pages/Scholarship.jsx'
 import Programs from './pages/Programs.jsx'
 import TestPrep from './pages/TestPrep.jsx'
+import Legal from './pages/Legal.jsx'
+
 
 // Pages still being prepared show the "We're updating this page" message (<InProgress />).
 // When a page is ready, import it above and use it in place of <InProgress />.
@@ -27,6 +29,8 @@ export default function App() {
         <Route path="clients" element={<Clients />} />
         <Route path="faqs" element={<Faqs />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="terms-and-conditions" element={<Legal page="terms" />} />
+        <Route path="privacy-policy" element={<Legal page="privacy" />} />
         <Route path="*" element={<InProgress />} />
       </Route>
     </Routes>
