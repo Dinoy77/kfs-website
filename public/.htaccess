@@ -1,0 +1,44 @@
+# Kerala Finishing School — Apache settings for cPanel hosting
+# 1) Old .html links go to the new pages (301 = permanent, good for Google)
+# 2) Every other address is handled by the React app (index.html)
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Always use https — turn on (remove the # from the 2 lines below)
+  # only after https://keralafinishingschool.com opens with a padlock
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Old website links
+  # Only when a visitor types /index.html (not the app's own internal use)
+  RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [R=301,L]
+  RewriteRule ^about\.html$ /about [R=301,L,NC]
+  RewriteRule ^contact\.html$ /contact [R=301,L,NC]
+  RewriteRule ^faq\.html$ /faqs [R=301,L,NC]
+  RewriteRule ^service\.html$ /programs [R=301,L,NC]
+  RewriteRule ^lateral_entry\.html$ /scholarship [R=301,L,NC]
+  RewriteRule ^KEAM\.html$ /test-prep [R=301,L,NC]
+  RewriteRule ^NEET\.html$ /test-prep [R=301,L,NC]
+  RewriteRule ^blog\.html$ /test-prep [R=301,L,NC]
+  RewriteRule ^team\.html$ /test-prep [R=301,L,NC]
+  RewriteRule ^Industry_Integrated_Academic_Program\.html$ /programs/industry-integrated-academic-program [R=301,L,NC]
+  RewriteRule ^Pay_After_Placement_Program\.html$ /programs/pay-after-placement-program [R=301,L,NC]
+  RewriteRule ^International_University_Collaborative_Program\.html$ /programs/international-university-collaborative-program [R=301,L,NC]
+  RewriteRule ^Training_and_Placement\.html$ /programs/training-and-placement [R=301,L,NC]
+  RewriteRule ^Train_and_Trainer_Program\.html$ /programs/train-the-trainer-program [R=301,L,NC]
+  RewriteRule ^Online_Coaching_Management\.html$ /programs/online-coaching-management [R=301,L,NC]
+  RewriteRule ^Career_Planning_Mapping_Management\.html$ /programs/career-planning-and-mapping [R=301,L,NC]
+  RewriteRule ^Students_Internship\.html$ /programs/students-internship [R=301,L,NC]
+  RewriteRule ^clients\.html$ /clients [R=301,L,NC]
+  RewriteRule ^terms_conditions\.html$ /terms-and-conditions [R=301,L,NC]
+  RewriteRule ^privacy_policy\.html$ /privacy-policy [R=301,L,NC]
+
+  # React app: send all other addresses to index.html
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
