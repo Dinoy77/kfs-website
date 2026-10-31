@@ -1,5 +1,6 @@
 // Programs (the "Services" menu).
 // Every program needs: slug (used in the web address), title and summary.
+// Optional `top`: a short word shown on its own line above the title (e.g. 'MBA').
 // A program gets its full page once it has a `page` block. Programs without one
 // show the "We're updating this page" message until their content is added.
 //
@@ -69,12 +70,13 @@ export const programs = [
   },
   {
     slug: 'pay-after-placement-program',
+    top: 'MBA', // shown on its own line above the title
     title: 'Pay After Placement Program',
     summary: 'Train now. Pay the course fee only after you get a job.',
     page: {
       headline: 'Unlocking career opportunities with guaranteed placement success',
       intro:
-        'At the Pay After Placement Program, we understand the importance of a rewarding career after education. Our program gives you comprehensive training and education, with the unique benefit of paying only after you secure a successful placement.',
+        'At the MBA Pay After Placement Program, we understand the importance of a rewarding career after education. Our program gives you comprehensive training and education, with the unique benefit of paying only after you secure a successful placement.',
       sections: [
         {
           type: 'features',
@@ -111,7 +113,7 @@ export const programs = [
         {
           type: 'text',
           heading: 'Your path to a brighter future',
-          text: 'Whether you are a recent graduate starting your career or a professional looking for a new direction, the Pay After Placement Program gives you the skills, the opportunities and the financial flexibility to reach your goals.',
+          text: 'Whether you are a recent graduate starting your career or a professional looking for a new direction, the MBA Pay After Placement Program gives you the skills, the opportunities and the financial flexibility to reach your goals.',
         },
       ],
     },
@@ -425,3 +427,6 @@ export const programs = [
 ]
 
 export const getProgram = (slug) => programs.find((p) => p.slug === slug)
+
+// Full one-line name, e.g. "MBA Pay After Placement Program" (for menus and tab titles)
+export const fullTitle = (p) => (p.top ? `${p.top} ${p.title}` : p.title)

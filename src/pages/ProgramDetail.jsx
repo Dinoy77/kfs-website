@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import PageBanner from '../components/PageBanner.jsx'
 import InProgress from './InProgress.jsx'
-import { getProgram, programs } from '../data/programs.js'
+import { getProgram, programs, fullTitle } from '../data/programs.js'
 import { about as homeAbout } from '../data/home.js'
 import { site } from '../data/site.js'
 import './Home.css'
@@ -69,7 +69,7 @@ export default function ProgramDetail() {
   const program = getProgram(slug)
 
   useEffect(() => {
-    if (program?.page) document.title = `${program.title} | ${site.name}`
+    if (program?.page) document.title = `${fullTitle(program)} | ${site.name}`
   }, [program])
 
   // Programs without content yet show the "updating" message
@@ -80,7 +80,7 @@ export default function ProgramDetail() {
 
   return (
     <>
-      <PageBanner title={program.title} crumb={program.title} parent={{ label: 'Services', to: '/programs' }} />
+      <PageBanner top={program.top} title={program.title} crumb={fullTitle(program)} parent={{ label: 'Services', to: '/programs' }} />
 
       <section className="pd">
         <div className="wrap pd-grid">
@@ -115,7 +115,7 @@ export default function ProgramDetail() {
             {others.map((p) => (
               <li key={p.slug}>
                 <Link to={p.link || `/programs/${p.slug}`}>
-                  <span className="pd-other-title">{p.title}</span>
+                  <span className="pd-other-title">{p.top && <span className="prog-top">{p.top}</span>}{p.title}</span>
                   <span className="pd-other-text">{p.summary}</span>
                 </Link>
               </li>

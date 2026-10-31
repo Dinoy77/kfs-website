@@ -73,7 +73,7 @@ export default function Programs() {
                 <span className="sv-icon" aria-hidden="true">
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d={icons[p.slug] || icons['industry-integrated-academic-program']} /></svg>
                 </span>
-                <h3 className="sv-card-title">{p.title}</h3>
+                <h3 className="sv-card-title">{p.top && <span className="prog-top">{p.top}</span>}{p.title}</h3>
                 <p className="sv-card-text">{p.summary}</p>
                 <Link to={`/programs/${p.slug}`} className="sv-btn">
                   Read more<span className="sr-only"> about {p.title}</span>

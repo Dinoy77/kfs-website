@@ -28,7 +28,7 @@ export default function ServicesSection() {
               <span className="sv-icon" aria-hidden="true">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">{icons[s.icon]}</svg>
               </span>
-              <h3 className="sv-card-title">{s.title}</h3>
+              <h3 className="sv-card-title">{s.top && <span className="prog-top">{s.top}</span>}{s.title}</h3>
               <p className="sv-card-text">{s.text}</p>
               <Link to={s.link} className="sv-btn">
                 Read more<span className="sr-only"> about {s.title}</span>

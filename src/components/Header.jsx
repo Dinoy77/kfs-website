@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { site } from '../data/site.js'
-import { programs } from '../data/programs.js'
+import { programs, fullTitle } from '../data/programs.js'
 import './Header.css'
 
 // Menu structure. Items with `children` become dropdowns.
@@ -11,7 +11,7 @@ const menu = [
   {
     label: 'Services',
     children: [
-      ...programs.map((p) => ({ label: p.title, to: p.link || `/programs/${p.slug}` })),
+      ...programs.map((p) => ({ label: fullTitle(p), to: p.link || `/programs/${p.slug}` })),
     ],
   },
   {

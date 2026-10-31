@@ -118,7 +118,8 @@ export const services = {
     },
     {
       icon: 'wallet',
-      title: 'Pay After Placement Program',
+      top: 'MBA',
+      title: 'MBA Pay After Placement Program',
       text: 'Students enroll with the assurance that they pay tuition fees only after securing a job.',
       link: '/programs/pay-after-placement-program',
     },
