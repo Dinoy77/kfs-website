@@ -879,6 +879,8 @@ p {
 }
 
 .pb-title .prog-top {
-  margin: 0 auto .35em;
-  font-size: .42em;
+  margin: 0 auto .25em;
+  font-size: 0.9em;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
