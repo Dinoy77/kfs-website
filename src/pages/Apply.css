@@ -1,0 +1,85 @@
+/* Application form — navy + red. Button styles (.ap-btn) come from About.css */
+
+.af { --navy: #12275e; --red: #c62828; --soft: #eef1f8; --line: #d5dae6; padding-block: 64px 88px; background: var(--soft); }
+.af-grid { display: grid; grid-template-columns: minmax(0, .75fr) minmax(0, 1.6fr); gap: 40px; align-items: start; }
+
+/* Side card */
+.af-side {
+  position: sticky; top: 140px; padding: 28px; border-radius: 16px; color: #fff;
+  background: radial-gradient(circle at 90% 10%, rgba(198, 40, 40, .4), transparent 50%), var(--navy);
+}
+.af-side h2 { margin: 0 0 10px; color: #fff; font-size: 1.35rem; }
+.af-side p { margin: 0 0 14px; color: #c9d2ea; line-height: 1.6; }
+.af-side b { color: #fff; }
+.af-side ul { margin: 0 0 22px; padding-left: 20px; color: #fff; line-height: 1.8; }
+.af-side li::marker { color: #ffd400; }
+.af-side-help { padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .18); }
+.af-side-help p { margin: 0 0 6px; }
+.af-side-help a { color: #ffd400; font-weight: 800; font-size: 1.1rem; text-decoration: none; }
+
+/* Form card */
+.af-form { padding: 32px; border-radius: 16px; background: #fff; border-top: 5px solid var(--red); box-shadow: 0 18px 40px rgba(18, 39, 94, .08); }
+.af-note { margin: 0 0 8px; color: #56627f; font-size: .95rem; }
+.af-note span, .af-field label span { color: var(--red); }
+.af-form fieldset { margin: 0 0 8px; padding: 0; border: 0; min-width: 0; }
+.af-form legend {
+  width: 100%; margin: 20px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+  color: var(--navy); font: 800 1.15rem var(--font-display);
+}
+.af-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+.af-field { margin-bottom: 16px; min-width: 0; }
+.af-field label { display: block; margin-bottom: 6px; color: #2c3858; font-weight: 700; font-size: .95rem; }
+.af-field input:not([type=file]), .af-field select, .af-field textarea {
+  width: 100%; padding: 12px 14px; font: inherit; font-size: 1rem; color: #15213f; background: #fff;
+  border: 1.5px solid var(--line); border-radius: 10px; transition: border-color .15s ease, box-shadow .15s ease;
+}
+.af-field textarea { resize: vertical; min-height: 84px; }
+.af-field input:focus, .af-field select:focus, .af-field textarea:focus {
+  outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(18, 39, 94, .15);
+}
+.af-field small { display: block; margin-top: 5px; color: #6b7590; font-size: .85rem; }
+.af-field.has-error input:not([type=file]), .af-field.has-error select, .af-field.has-error textarea, .af-field.has-error .af-file { border-color: var(--red); }
+.af-field small.af-error { color: var(--red); font-weight: 600; }
+
+/* File picker: the real input covers the whole box, so clicking anywhere opens it */
+.af-file {
+  position: relative; display: flex; align-items: center; gap: 12px; padding: 8px;
+  border: 1.5px dashed #a9b2c8; border-radius: 10px; background: #f8f9fc;
+}
+.af-file input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.af-file-btn { flex-shrink: 0; padding: 8px 14px; border-radius: 8px; background: var(--navy); color: #fff; font-weight: 700; font-size: .9rem; }
+.af-file-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #4a5675; font-size: .95rem; }
+.af-file:focus-within { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(18, 39, 94, .15); }
+.af-file:hover .af-file-btn { background: var(--red); }
+
+.af-fee {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 12px; margin: 12px 0 20px;
+  padding: 16px 18px; border-radius: 12px; background: #fff8db; border: 1px solid #f2dc7a;
+}
+.af-fee span { color: var(--navy); font-weight: 700; }
+.af-fee strong { color: var(--red); font: 800 1.4rem var(--font-display); }
+.af-fee small { grid-column: 1 / -1; color: #6b5d1c; }
+
+.af-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.af-summary { margin: 0 0 14px; padding: 12px 14px; border-radius: 10px; background: #fdecec; color: #9b1c1c; font-weight: 600; }
+.af-submit { width: 100%; padding: 15px; font-size: 1.05rem; border: 0; cursor: pointer; }
+.af-submit:disabled { opacity: .65; cursor: wait; }
+.af-privacy { margin: 12px 0 0; text-align: center; color: #6b7590; font-size: .9rem; }
+.af-privacy a { color: var(--navy); font-weight: 700; }
+
+/* Success */
+.af-done { max-width: 620px; padding: 48px 32px; text-align: center; border-radius: 18px; background: #fff; border-top: 5px solid var(--red); }
+.af-done-icon { display: inline-grid; place-items: center; width: 76px; height: 76px; margin-bottom: 16px; border-radius: 50%; background: #e3f4e8; color: #1c7c3a; }
+.af-done h2 { margin: 0 0 10px; color: var(--navy); font-size: 1.8rem; }
+.af-done p { color: #4a5675; line-height: 1.6; }
+.af-done-small a { color: var(--red); font-weight: 700; }
+
+@media (max-width: 900px) {
+  .af-grid { grid-template-columns: 1fr; }
+  .af-side { position: static; }
+}
+@media (max-width: 640px) {
+  .af { padding-block: 40px 64px; }
+  .af-form { padding: 22px 18px; }
+  .af-row { grid-template-columns: 1fr; }
+}

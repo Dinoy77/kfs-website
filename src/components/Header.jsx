@@ -146,6 +146,8 @@ export default function Header() {
               )}
             </ul>
           </nav>
+
+          <Link to="/apply" className="nav-apply" onClick={closeAll}>Apply now</Link>
         </div>
       </div>
     </header>
