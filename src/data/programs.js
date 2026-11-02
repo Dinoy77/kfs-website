@@ -10,7 +10,12 @@
 //   sections  – list of blocks, each one of:
 //     { type: 'features', heading, items: [{ title, text }] }   → benefit cards
 //     { type: 'steps',    heading, items: ['…'], text }         → numbered steps
-//     { type: 'text',     heading, text }                       → heading + paragraph
+//     { type: 'text',     heading, text }                       → heading + paragraph (text can be a list of paragraphs)
+//     { type: 'steps', heading, items: [{ title, text }] }       → numbered steps with a short paragraph each
+//     { type: 'list',  heading, items: ['…'], style: 'cards' }   → tick list (style 'cards' = highlight boxes)
+//     { type: 'callout', title, text, sign, signLine, note }     → closing message box
+//   tagline  – small line above the headline (optional)
+//   intro    – can also be a list of paragraphs
 
 export const programs = [
   {
@@ -72,48 +77,91 @@ export const programs = [
     slug: 'pay-after-placement-program',
     top: 'MBA', // shown on its own line above the title
     title: 'Pay After Placement Program',
-    summary: 'Train now. Pay the course fee only after you get a job.',
+    summary: 'Complete your MBA now. Pay your fees after getting placed.',
     page: {
-      headline: 'Unlocking career opportunities with guaranteed placement success',
-      intro:
-        'At the MBA Pay After Placement Program, we understand the importance of a rewarding career after education. Our program gives you comprehensive training and education, with the unique benefit of paying only after you secure a successful placement.',
+      // Content given by the team lead (2 Nov 2026)
+      tagline: 'An Employability Enhancement Initiative by Kerala Finishing School, Trivandrum',
+      headline: 'Complete Your MBA Now. Pay Your Fees After Getting Placed.',
+      intro: [
+        'Kerala Finishing School, Trivandrum, introduces the MBA Pay After Placement Program, a special initiative designed to help eligible graduates from Kerala pursue a two-year MBA without the immediate financial burden of paying the entire tuition fee upfront.',
+        'The objective is to make management education accessible while improving employability through corporate exposure, practical learning, professional training and career development.',
+        'Under this program, students can pursue their MBA first and pay the applicable tuition fees after securing employment, subject to the agreed terms and conditions.',
+      ],
       sections: [
         {
-          type: 'features',
-          heading: 'Why choose us?',
+          type: 'steps',
+          heading: 'How does the program work?',
           items: [
             {
-              title: 'Placement guarantee',
-              text: 'We stand by our commitment to your career success. The program comes with a placement guarantee, so you get the opportunity to apply your new skills in a professional setting.',
+              title: 'First Semester – Full-Time Campus Education',
+              text: 'Students attend regular MBA classes at the designated campus and develop a foundation in management, business administration, communication, leadership and professional skills.',
             },
             {
-              title: 'Flexible payment',
-              text: 'We know the financial challenges students face during their education. Our Pay After Placement model lets you focus on your studies without paying tuition fees upfront.',
+              title: 'After First Semester – Corporate Internship',
+              text: 'Students are facilitated with opportunities to undertake internships with participating companies to gain practical industry exposure.',
             },
             {
-              title: 'Industry-relevant training',
-              text: 'Our curriculum is built with industry experts, giving you practical, up-to-date skills that match what the job market needs.',
+              title: 'Second Year – Industry-Integrated Learning',
+              text: 'Students continue their MBA studies alongside structured industry exposure, practical projects, professional development and academic assessments, subject to university regulations.',
             },
             {
-              title: 'Professional development',
-              text: 'Beyond technical skills, we focus on soft skills, resume building and interview preparation to improve your overall employability.',
-            },
-            {
-              title: 'Dedicated career support',
-              text: 'We offer ongoing career support, including job placement assistance, networking opportunities and guidance to help you navigate the job market.',
+              title: 'Employment – Pay After Placement',
+              text: 'After securing employment, students pay their deferred MBA tuition fees according to the agreed payment schedule and program conditions.',
             },
           ],
         },
         {
-          type: 'steps',
-          heading: 'How it works',
-          items: ['Enroll in the program', 'Complete the training', 'Get placed in a job', 'Repay the fees in easy instalments'],
-          text: 'Once you have started your career, you repay the program fees through a convenient payment plan. Your success is our success, and we support you throughout your journey.',
+          type: 'list',
+          heading: 'Eligibility criteria',
+          items: [
+            'Applicant must be a resident of Kerala.',
+            'Must have completed graduation from a recognised university.',
+            'Minimum 50% marks in the qualifying undergraduate degree.',
+            'Must satisfy applicable MBA admission eligibility requirements.',
+            'Must successfully complete the selection and enrolment process.',
+          ],
         },
         {
           type: 'text',
-          heading: 'Your path to a brighter future',
-          text: 'Whether you are a recent graduate starting your career or a professional looking for a new direction, the MBA Pay After Placement Program gives you the skills, the opportunities and the financial flexibility to reach your goals.',
+          heading: 'Why is Kerala Finishing School offering this program?',
+          text: [
+            "Kerala has a large number of graduates seeking better employment opportunities. However, academic qualifications alone may not always provide the professional skills and corporate exposure required by today's employers.",
+            'Kerala Finishing School aims to bridge this gap through industry-oriented skill development and higher education.',
+          ],
+        },
+        {
+          type: 'list',
+          heading: 'Key objectives',
+          items: [
+            'Enhance graduate employability.',
+            'Reduce the immediate financial burden of higher education.',
+            'Improve corporate communication and professional skills.',
+            'Provide practical industry exposure through internships.',
+            'Develop leadership, managerial and business skills.',
+            'Prepare graduates for better career opportunities.',
+          ],
+        },
+        {
+          type: 'list',
+          heading: 'Program highlights',
+          style: 'cards',
+          items: [
+            'Two-Year MBA Program.',
+            'Affiliated to a Government University.',
+            'Approved by AICTE, New Delhi.',
+            'Industry-oriented learning approach.',
+            'Corporate internship opportunities.',
+            'Professional and employability training.',
+            'Deferred tuition fee payment facility after placement.',
+          ],
+        },
+        {
+          type: 'callout',
+          title: 'Your career should not wait because of financial constraints!',
+          text: 'Complete your MBA, develop professional skills, gain corporate exposure and build your career.',
+          sign: 'Kerala Finishing School, Trivandrum',
+          signLine: 'Your Skill Partner. Your Career Partner.',
+          note: 'Special Pay After Placement Facility for Eligible Graduates from Kerala.',
         },
       ],
     },

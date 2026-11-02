@@ -46,20 +46,63 @@ function Section({ block }) {
     )
   }
   if (block.type === 'steps') {
+    const detailed = typeof block.items[0] === 'object'
     return (
       <section className="pd-block">
         <h2 className="pd-h2">{block.heading}</h2>
-        <ol className="pd-steps">
-          {block.items.map((s) => <li key={s}><span>{s}</span></li>)}
-        </ol>
+        {detailed ? (
+          <ol className="pd-timeline">
+            {block.items.map((s) => (
+              <li key={s.title}>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <ol className="pd-steps">
+            {block.items.map((s) => <li key={s}><span>{s}</span></li>)}
+          </ol>
+        )}
         {block.text && <p className="pd-text">{block.text}</p>}
       </section>
     )
   }
+  if (block.type === 'list') {
+    return (
+      <section className="pd-block">
+        <h2 className="pd-h2">{block.heading}</h2>
+        <ul className={block.style === 'cards' ? 'pd-highlights' : 'pd-list'}>
+          {block.items.map((item) => (
+            <li key={item}>
+              <span className="pd-tick" aria-hidden="true"><CheckIcon /></span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+  if (block.type === 'callout') {
+    return (
+      <section className="pd-callout">
+        <h2>{block.title}</h2>
+        {block.text && <p className="pd-callout-text">{block.text}</p>}
+        {block.sign && (
+          <p className="pd-callout-sign">
+            <strong>{block.sign}</strong>
+            {block.signLine && <span>{block.signLine}</span>}
+          </p>
+        )}
+        {block.note && <p className="pd-callout-note">{block.note}</p>}
+      </section>
+    )
+  }
+  const paras = Array.isArray(block.text) ? block.text : [block.text]
   return (
     <section className="pd-block">
       {block.heading && <h2 className="pd-h2">{block.heading}</h2>}
-      <p className="pd-text">{block.text}</p>
+      {paras.map((t) => <p key={t} className="pd-text">{t}</p>)}
     </section>
   )
 }
@@ -100,8 +143,11 @@ export default function ProgramDetail() {
 
           {/* Right: program content */}
           <article className="pd-main">
+            {page.tagline && <p className="pd-tagline">{page.tagline}</p>}
             <h2 className="pd-headline">{page.headline}</h2>
-            <p className="pd-intro">{page.intro}</p>
+            {(Array.isArray(page.intro) ? page.intro : [page.intro]).map((t) => (
+              <p key={t} className="pd-intro">{t}</p>
+            ))}
             {page.sections.map((b, i) => <Section key={i} block={b} />)}
           </article>
         </div>
