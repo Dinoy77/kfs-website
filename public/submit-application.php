@@ -16,7 +16,7 @@ const TO_EMAIL   = 'enquiry@keralafinishingschool.com'; // where applications ar
 const FROM_NAME  = 'Kerala Finishing School Website';
 const SEND_ACK   = false;                                // true = also email a confirmation to the student
 const MAX_BYTES  = 2 * 1024 * 1024;                      // 2 MB per file
-const COURSES    = ['MBA Pay After Placement', 'PGDM Pay After Placement', 'MCA Pay After Placement', 'Pharma Innovator', 'Corporate Pharma'];
+const COURSES    = ['B Pharm', 'D Pharm', 'B Pharm Lateral Entry', 'MBA Pay After Placement', 'PGDM Pay After Placement', 'MCA Pay After Placement', 'Pharma Innovator', 'Corporate Pharma'];
 // Copies are saved in /home/<cpanel-user>/kfs-applications (not reachable from the web)
 define('SAVE_DIR', dirname(__DIR__, 2) . '/kfs-applications');
 // Gmail login for sending (App Password). Kept OUTSIDE the website folder and out of GitHub:

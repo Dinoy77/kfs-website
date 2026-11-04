@@ -13,6 +13,9 @@ const ENDPOINT = '/submit-application.php'
 const MAX_MB = 2
 // Keep these lists the same as in public/submit-application.php
 const COURSES = [
+  'B Pharm',
+  'D Pharm',
+  'B Pharm Lateral Entry',
   'MBA Pay After Placement',
   'PGDM Pay After Placement',
   'MCA Pay After Placement',
