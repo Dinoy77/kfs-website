@@ -22,40 +22,80 @@ function InfoCard({ icon, title, children }) {
   )
 }
 
-// No backend yet: the form opens WhatsApp with the details filled in,
-// so every enquiry still reaches the team.
+// Sends the enquiry to /submit-contact.php, which emails it to enquiry@keralafinishingschool.com.
+// (The PHP file only works on the cPanel server, not on Vercel or localhost.)
+// If sending fails, the visitor can still send the same details on WhatsApp.
 function ContactForm() {
   const empty = { name: '', email: '', phone: '', option: '', message: '' }
   const [form, setForm] = useState(empty)
+  const [status, setStatus] = useState('idle') // idle | sending | done | failed
+  const [error, setError] = useState('')
   const update = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const submit = (e) => {
+  const whatsappText = () => [
+    'New enquiry from the website',
+    `Name: ${form.name}`,
+    form.email && `Email: ${form.email}`,
+    `Phone: ${form.phone}`,
+    form.option && `Interested in: ${form.option}`,
+    form.message && `Message: ${form.message}`,
+  ].filter(Boolean).join('\n')
+
+  const submit = async (e) => {
     e.preventDefault()
-    const text = [
-      'New enquiry from the website',
-      `Name: ${form.name}`,
-      form.email && `Email: ${form.email}`,
-      `Phone: ${form.phone}`,
-      form.option && `Interested in: ${form.option}`,
-      form.message && `Message: ${form.message}`,
-    ].filter(Boolean).join('\n')
-    window.open(whatsappLink(text), '_blank', 'noopener')
+    if (form.phone.replace(/\D/g, '').length < 10) {
+      setStatus('failed')
+      setError('Please enter a valid 10-digit contact number.')
+      return
+    }
+    setStatus('sending')
+    setError('')
+    try {
+      const fd = new FormData(e.currentTarget)
+      const res = await fetch('/submit-contact.php', { method: 'POST', body: fd })
+      const data = await res.json().catch(() => null)
+      if (data && data.success) {
+        setStatus('done')
+        setForm(empty)
+      } else {
+        setStatus('failed')
+        setError((data && data.message) || 'Sorry, your message could not be sent right now.')
+      }
+    } catch {
+      setStatus('failed')
+      setError('Could not send right now. Please check your internet connection and try again.')
+    }
   }
+
+  if (status === 'done') {
+    return (
+      <div className="ct-form ct-done" role="status">
+        <span className="ct-done-icon" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </span>
+        <h3 className="ct-form-title">Thank you! Your message has been sent.</h3>
+        <p className="ct-note">Our team will contact you shortly. For urgent queries, call <a href={`tel:${site.mobile.tel}`}>{site.mobile.display}</a>.</p>
+        <button type="button" className="ct-submit" onClick={() => setStatus('idle')}>Send another message</button>
+      </div>
+    )
+  }
+
+  const sending = status === 'sending'
 
   return (
     <form className="ct-form" onSubmit={submit}>
       <h3 className="ct-form-title">{contact.formTitle}</h3>
       <label htmlFor="ct-name">Your name</label>
-      <input id="ct-name" name="name" required autoComplete="name" value={form.name} onChange={update} />
+      <input id="ct-name" name="name" required maxLength={100} autoComplete="name" value={form.name} onChange={update} />
 
       <div className="ct-row">
         <div>
           <label htmlFor="ct-email">Your email <span className="ct-opt">(optional)</span></label>
-          <input id="ct-email" name="email" type="email" autoComplete="email" value={form.email} onChange={update} />
+          <input id="ct-email" name="email" type="email" maxLength={120} autoComplete="email" value={form.email} onChange={update} />
         </div>
         <div>
           <label htmlFor="ct-phone">Contact number</label>
-          <input id="ct-phone" name="phone" type="tel" inputMode="tel" required autoComplete="tel" value={form.phone} onChange={update} />
+          <input id="ct-phone" name="phone" type="tel" inputMode="tel" required maxLength={20} autoComplete="tel" value={form.phone} onChange={update} />
         </div>
       </div>
 
@@ -66,10 +106,24 @@ function ContactForm() {
       </select>
 
       <label htmlFor="ct-message">Message <span className="ct-opt">(optional)</span></label>
-      <textarea id="ct-message" name="message" rows="4" value={form.message} onChange={update} />
+      <textarea id="ct-message" name="message" rows="4" maxLength={2000} value={form.message} onChange={update} />
 
-      <button type="submit" className="ct-submit">Send message</button>
-      <p className="ct-note">Opens WhatsApp with your details filled in.</p>
+      {/* Hidden from people; spam bots fill it in */}
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="ct-hp" />
+
+      {status === 'failed' && (
+        <p className="ct-error" role="alert">
+          {error}{' '}
+          <a href={whatsappLink(whatsappText())} target="_blank" rel="noreferrer">Send on WhatsApp instead</a>
+        </p>
+      )}
+
+      <button type="submit" className="ct-submit" disabled={sending}>
+        {sending ? 'Sending…' : 'Send message'}
+      </button>
+      <p className="ct-note">
+        Prefer WhatsApp? <a href={whatsappLink(whatsappText())} target="_blank" rel="noreferrer">Chat with us</a>
+      </p>
     </form>
   )
 }
