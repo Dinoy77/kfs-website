@@ -12,14 +12,16 @@
  */
 
 // ===================== SETTINGS =====================
-const TO_EMAIL   = 'enquirykfsi@gmail.com';             // where applications are sent
-const FROM_EMAIL = 'no-reply@keralafinishingschool.com'; // must be on our own domain
+const TO_EMAIL   = 'enquiry@keralafinishingschool.com'; // where applications are sent
 const FROM_NAME  = 'Kerala Finishing School Website';
-const SEND_ACK   = true;                                 // email a confirmation to the student
+const SEND_ACK   = false;                                // true = also email a confirmation to the student
 const MAX_BYTES  = 2 * 1024 * 1024;                      // 2 MB per file
-const COURSES    = ['B Pharm', 'D Pharm', 'B Pharm Lateral Entry'];
+const COURSES    = ['MBA Pay After Placement', 'PGDM Pay After Placement', 'MCA Pay After Placement', 'Pharma Innovator', 'Corporate Pharma'];
 // Copies are saved in /home/<cpanel-user>/kfs-applications (not reachable from the web)
 define('SAVE_DIR', dirname(__DIR__, 2) . '/kfs-applications');
+// Gmail login for sending (App Password). Kept OUTSIDE the website folder and out of GitHub:
+//   /home/<cpanel-user>/kfs-mail-config.php
+define('MAIL_CONFIG', dirname(__DIR__, 2) . '/kfs-mail-config.php');
 // ====================================================
 
 date_default_timezone_set('Asia/Kolkata');
@@ -64,6 +66,7 @@ $d = [
     'city'    => oneLine(field('city', 60)),
     'state'   => oneLine(field('state', 60)),
     'course'  => field('course', 60),
+    'qualification' => oneLine(field('qualification', 150)),
 ];
 
 // ---- Check the fields (same rules as the form) ----
@@ -77,6 +80,7 @@ if ($d['address'] === '')                                reply(false, 'Please en
 if ($d['city'] === '')                                   reply(false, 'Please enter your city / district.');
 if ($d['state'] === '')                                  reply(false, 'Please enter your state.');
 if (!in_array($d['course'], COURSES, true))              reply(false, 'Please select a course.');
+if ($d['qualification'] === '')                          reply(false, 'Please enter your highest qualification.');
 
 // ---- Check the documents (real file type, not just the name) ----
 $fileRules = [
@@ -84,6 +88,7 @@ $fileRules = [
     'tenth'     => ['label' => '10th certificate',     'required' => true,  'types' => ['application/pdf' => 'pdf', 'image/jpeg' => 'jpg', 'image/png' => 'png']],
     'twelfth'   => ['label' => '12th certificate',     'required' => true,  'types' => ['application/pdf' => 'pdf', 'image/jpeg' => 'jpg', 'image/png' => 'png']],
     'scorecard' => ['label' => 'Entrance score card',  'required' => false, 'types' => ['application/pdf' => 'pdf', 'image/jpeg' => 'jpg', 'image/png' => 'png']],
+    'documents' => ['label' => 'Important documents',  'required' => false, 'types' => ['application/pdf' => 'pdf', 'image/jpeg' => 'jpg', 'image/png' => 'png'], 'max' => 5 * 1024 * 1024],
 ];
 
 $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -95,8 +100,9 @@ foreach ($fileRules as $key => $rule) {
         if ($rule['required']) reply(false, 'Please upload your ' . strtolower($rule['label']) . '.');
         continue;
     }
-    if ($f['error'] === UPLOAD_ERR_INI_SIZE || $f['error'] === UPLOAD_ERR_FORM_SIZE || $f['size'] > MAX_BYTES) {
-        reply(false, $rule['label'] . ' is larger than 2 MB.');
+    $max = $rule['max'] ?? MAX_BYTES;
+    if ($f['error'] === UPLOAD_ERR_INI_SIZE || $f['error'] === UPLOAD_ERR_FORM_SIZE || $f['size'] > $max) {
+        reply(false, $rule['label'] . ' is larger than ' . round($max / 1048576) . ' MB.');
     }
     if ($f['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($f['tmp_name'])) {
         reply(false, 'Could not upload the ' . strtolower($rule['label']) . '. Please try again.');
@@ -129,8 +135,8 @@ if (@is_dir($dir) || @mkdir($dir, 0750, true)) {
     $csv = SAVE_DIR . '/applications.csv';
     $new = !file_exists($csv);
     if ($fh = @fopen($csv, 'a')) {
-        if ($new) fputcsv($fh, ['Application ID', 'Date', 'Name', 'DOB', 'Gender', 'Father/Guardian', 'Phone', 'Email', 'Address', 'City', 'State', 'Course']);
-        fputcsv($fh, [$appId, $when, $d['name'], $d['dob'], $d['gender'], $d['parent'], $d['phone'], $d['email'], $d['address'], $d['city'], $d['state'], $d['course']]);
+        if ($new) fputcsv($fh, ['Application ID', 'Date', 'Name', 'DOB', 'Gender', 'Father/Guardian', 'Phone', 'Email', 'Address', 'City', 'State', 'Course', 'Highest Qualification']);
+        fputcsv($fh, [$appId, $when, $d['name'], $d['dob'], $d['gender'], $d['parent'], $d['phone'], $d['email'], $d['address'], $d['city'], $d['state'], $d['course'], $d['qualification']]);
         fclose($fh);
     }
     $savedTo = $dir;
@@ -142,6 +148,7 @@ $rows = [
     'Full name' => $d['name'], 'Date of birth' => date('d-m-Y', strtotime($d['dob'])), 'Gender' => $d['gender'],
     'Father / guardian' => $d['parent'], 'Phone' => $d['phone'], 'Email' => $d['email'],
     'Address' => $d['address'], 'City / district' => $d['city'], 'State' => $d['state'],
+    'Highest qualification' => $d['qualification'],
 ];
 $table = '';
 foreach ($rows as $k => $v) {
@@ -158,25 +165,57 @@ $html = '<div style="font-family:Arial,sans-serif;color:#15213f">'
       . ($savedTo ? '<p style="color:#56627f;font-size:12px">A copy is saved on the server in kfs-applications.</p>' : '')
       . '</div>';
 
-function sendMail($to, $subject, $html, $files = [], $replyTo = '') {
-    $boundary = 'kfs_' . bin2hex(random_bytes(12));
-    $headers  = [
-        'MIME-Version: 1.0',
-        'From: ' . mb_encode_mimeheader(FROM_NAME) . ' <' . FROM_EMAIL . '>',
-        'Content-Type: multipart/mixed; boundary="' . $boundary . '"',
-    ];
-    if ($replyTo) $headers[] = 'Reply-To: ' . $replyTo;
+require __DIR__ . '/phpmailer/Exception.php';
+require __DIR__ . '/phpmailer/PHPMailer.php';
+require __DIR__ . '/phpmailer/SMTP.php';
 
-    $body  = "--$boundary\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n";
-    $body .= chunk_split(base64_encode($html)) . "\r\n";
-    foreach ($files as $f) {
-        $body .= "--$boundary\r\nContent-Type: {$f['mime']}; name=\"{$f['name']}\"\r\n"
-               . "Content-Transfer-Encoding: base64\r\nContent-Disposition: attachment; filename=\"{$f['name']}\"\r\n\r\n"
-               . chunk_split(base64_encode(file_get_contents($f['tmp']))) . "\r\n";
+use PHPMailer\PHPMailer\PHPMailer;
+
+$mailCfg = is_file(MAIL_CONFIG) ? (include MAIL_CONFIG) : null;
+
+function logMailError($msg) {
+    @file_put_contents(SAVE_DIR . '/mail-errors.log', '[' . date('d M Y, h:i A') . '] ' . $msg . "\n", FILE_APPEND);
+}
+
+// Sends through Gmail (SMTP) when kfs-mail-config.php exists; returns true/false
+function sendMail($to, $subject, $html, $files = [], $replyEmail = '', $replyName = '') {
+    global $mailCfg;
+    if (!$mailCfg || empty($mailCfg['user'])) {
+        logMailError('Not sent to ' . $to . ': kfs-mail-config.php is missing.');
+        return false;
     }
-    $body .= "--$boundary--";
-    // -f sets the envelope sender, which helps the email reach the inbox
-    return mail($to, mb_encode_mimeheader($subject, 'UTF-8'), $body, implode("\r\n", $headers), '-f' . FROM_EMAIL);
+    $m = new PHPMailer(true);
+    try {
+        $m->isSMTP();
+        $m->Host = $mailCfg['host'] ?? 'localhost';
+        $m->Port = $mailCfg['port'] ?? 25;
+        if (empty($mailCfg['pass'])) {
+            // No password: send through this server's own mail system (localhost)
+            $m->SMTPAuth    = false;
+            $m->SMTPSecure  = '';
+            $m->SMTPAutoTLS = false;
+        } else {
+            $m->SMTPAuth   = true;
+            $m->Username   = $mailCfg['user'];
+            $m->Password   = str_replace(' ', '', $mailCfg['pass']); // App Passwords are often copied with spaces
+            $m->SMTPSecure = $mailCfg['secure'] ?? (($m->Port == 465) ? PHPMailer::ENCRYPTION_SMTPS : PHPMailer::ENCRYPTION_STARTTLS);
+            if (($mailCfg['secure'] ?? null) === '') $m->SMTPAutoTLS = false; // only for local testing
+        }
+        $m->CharSet    = 'UTF-8';
+        $m->setFrom($mailCfg['user'], FROM_NAME);  // Gmail only sends from its own address
+        $m->addAddress($to);
+        if ($replyEmail) $m->addReplyTo($replyEmail, $replyName);
+        $m->isHTML(true);
+        $m->Subject = $subject;
+        $m->Body    = $html;
+        $m->AltBody = trim(html_entity_decode(strip_tags(str_replace(['<br>', '</tr>', '</p>'], "\n", $html))));
+        foreach ($files as $f) $m->addAttachment($f['tmp'], $f['name'], PHPMailer::ENCODING_BASE64, $f['mime']);
+        $m->send();
+        return true;
+    } catch (Throwable $e) {
+        logMailError('Not sent to ' . $to . ': ' . $m->ErrorInfo);
+        return false;
+    }
 }
 
 $sent = sendMail(
@@ -184,7 +223,8 @@ $sent = sendMail(
     'New application: ' . $d['name'] . ' – ' . $d['course'] . ' (' . $appId . ')',
     $html,
     $files,
-    $d['name'] . ' <' . $d['email'] . '>'
+    $d['email'],
+    $d['name']
 );
 
 if (!$sent && !$savedTo) {
@@ -198,9 +238,9 @@ if (SEND_ACK) {
          . '<p>Thank you for applying to Kerala Finishing School for <b>' . $h($d['course']) . '</b>. '
          . 'We have received your application and documents.</p>'
          . '<p>Your application number is <b>' . $h($appId) . '</b>. Our team will contact you shortly.</p>'
-         . '<p>For any questions, call +91 77360 25600 or reply to enquirykfsi@gmail.com.</p>'
+         . '<p>For any questions, call +91 77360 25600 or reply to ' . TO_EMAIL . '.</p>'
          . '<p>Regards,<br>Kerala Finishing School<br>Thiruvananthapuram</p></div>';
-    sendMail($d['email'], 'Application received – Kerala Finishing School (' . $appId . ')', $ack, [], 'Kerala Finishing School <' . TO_EMAIL . '>');
+    sendMail($d['email'], 'Application received – Kerala Finishing School (' . $appId . ')', $ack, [], TO_EMAIL, 'Kerala Finishing School');
 }
 
 reply(true, $appId);

@@ -11,7 +11,15 @@ import './Apply.css'
 
 const ENDPOINT = '/submit-application.php'
 const MAX_MB = 2
-const COURSES = ['B Pharm', 'D Pharm', 'B Pharm Lateral Entry']
+// Keep these lists the same as in public/submit-application.php
+const COURSES = [
+  'MBA Pay After Placement',
+  'PGDM Pay After Placement',
+  'MCA Pay After Placement',
+  'Pharma Innovator',
+  'Corporate Pharma',
+]
+
 const APPLICATION_FEE = '₹1,000'
 
 const FILES = [
@@ -19,6 +27,7 @@ const FILES = [
   { name: 'tenth', label: '10th certificate / marksheet', hint: 'PDF, JPG or PNG, max 2 MB', accept: '.pdf,.jpg,.jpeg,.png', types: ['pdf', 'jpg', 'jpeg', 'png'], required: true },
   { name: 'twelfth', label: '12th certificate / marksheet', hint: 'PDF, JPG or PNG, max 2 MB', accept: '.pdf,.jpg,.jpeg,.png', types: ['pdf', 'jpg', 'jpeg', 'png'], required: true },
   { name: 'scorecard', label: 'Entrance exam score card', hint: 'Upload if you have written an entrance exam. PDF, JPG or PNG, max 2 MB', accept: '.pdf,.jpg,.jpeg,.png', types: ['pdf', 'jpg', 'jpeg', 'png'], required: false },
+  { name: 'documents', label: 'Important documents (Degree / merged docs)', hint: 'Degree certificate or all documents merged into one file. PDF, JPG or PNG, max 5 MB', accept: '.pdf,.jpg,.jpeg,.png', types: ['pdf', 'jpg', 'jpeg', 'png'], required: false, maxMb: 5 },
 ]
 
 // Order matters: the first field with a problem gets the focus
@@ -35,6 +44,7 @@ function validate(fd) {
   if (!v('city')) e.city = 'Please enter your city / district.'
   if (!v('state')) e.state = 'Please enter your state.'
   if (!v('course')) e.course = 'Please select a course.'
+  if (!v('qualification')) e.qualification = 'Please enter your highest qualification.'
   for (const f of FILES) {
     const file = fd.get(f.name)
     const has = file && file.size > 0
@@ -44,7 +54,7 @@ function validate(fd) {
     }
     const ext = file.name.split('.').pop().toLowerCase()
     if (!f.types.includes(ext)) e[f.name] = `Only ${f.types.join(', ').toUpperCase()} files are allowed.`
-    else if (file.size > MAX_MB * 1024 * 1024) e[f.name] = `This file is larger than ${MAX_MB} MB.`
+    else if (file.size > (f.maxMb || MAX_MB) * 1024 * 1024) e[f.name] = `This file is larger than ${f.maxMb || MAX_MB} MB.`
   }
   return e
 }
@@ -152,6 +162,7 @@ export default function Apply() {
               <li>10th certificate or marksheet</li>
               <li>12th certificate or marksheet</li>
               <li>Entrance exam score card (if any)</li>
+              <li>Degree certificate or merged documents (if any, max 5 MB)</li>
             </ul>
             <div className="af-side-help">
               <p>Need help filling the form?</p>
@@ -211,6 +222,9 @@ export default function Apply() {
                   <option value="">Select a course</option>
                   {COURSES.map((c) => <option key={c}>{c}</option>)}
                 </select>
+              </Field>
+              <Field id="af-qualification" label="Highest qualification" required error={errors.qualification}>
+                <input type="text" maxLength={150} {...a('qualification')} />
               </Field>
             </fieldset>
 
