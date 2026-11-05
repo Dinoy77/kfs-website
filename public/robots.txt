@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /submit-application.php
+Disallow: /submit-contact.php
+Disallow: /phpmailer/
+
+Sitemap: https://keralafinishingschool.com/sitemap.xml

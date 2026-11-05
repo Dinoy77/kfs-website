@@ -6,10 +6,18 @@
   RewriteEngine On
   RewriteBase /
 
-  # Always use https — turn on (remove the # from the 2 lines below)
-  # only after https://keralafinishingschool.com opens with a padlock
-  # RewriteCond %{HTTPS} off
-  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Always use https.
+  # 1) Visitors coming through Cloudflare on http://
+  RewriteCond %{HTTP:CF-Visitor} scheme...http[^s] [NC]
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # 2) Visitors coming directly (no Cloudflare) on http://
+  RewriteCond %{HTTP:CF-Visitor} ^$
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # www.keralafinishingschool.com -> keralafinishingschool.com
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
   # Old website links
   # Only when a visitor types /index.html (not the app's own internal use)
