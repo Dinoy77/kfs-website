@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PageBanner from '../components/PageBanner.jsx'
+import PaymentStep from '../components/PaymentStep.jsx'
 import { site } from '../data/site.js'
 import './About.css'
 import './Apply.css'
 
 // Application form. Sends everything (with documents) to /submit-application.php,
-// which emails it to the KFS team. The PHP file only works on the cPanel server,
-// not on Vercel or localhost.
+// which emails it to the KFS team. After a successful submit the page moves to
+// the payment step (PaymentStep.jsx). The PHP files only work on the cPanel
+// server, not on Vercel or localhost.
 
 const ENDPOINT = '/submit-application.php'
 const MAX_MB = 2
@@ -62,6 +64,11 @@ function validate(fd) {
   return e
 }
 
+// Short reference the student quotes while paying, e.g. KFS-8F3K2A
+function makeRef() {
+  return 'KFS-' + Math.random().toString(36).slice(2, 8).toUpperCase()
+}
+
 function Field({ id, label, required, error, hint, children }) {
   return (
     <div className={`af-field ${error ? 'has-error' : ''}`}>
@@ -76,9 +83,10 @@ function Field({ id, label, required, error, hint, children }) {
 export default function Apply() {
   const formRef = useRef(null)
   const [errors, setErrors] = useState({})
-  const [status, setStatus] = useState('idle') // idle | sending | done | failed
+  const [status, setStatus] = useState('idle') // idle | sending | payment | failed
   const [message, setMessage] = useState('')
   const [fileNames, setFileNames] = useState({})
+  const [applicant, setApplicant] = useState(null)
 
   useEffect(() => {
     document.title = `Application Form | ${site.name}`
@@ -107,11 +115,20 @@ export default function Apply() {
     setStatus('sending')
     setMessage('')
     try {
+      const ref = makeRef()
       fd.append('page', window.location.href)
+      fd.append('ref', ref)
       const res = await fetch(ENDPOINT, { method: 'POST', body: fd })
       const data = await res.json().catch(() => null)
       if (data && data.success) {
-        setStatus('done')
+        setApplicant({
+          ref,
+          name: String(fd.get('name')).trim(),
+          phone: String(fd.get('phone')).trim(),
+          email: String(fd.get('email')).trim(),
+          course: String(fd.get('course')).trim(),
+        })
+        setStatus('payment')
         window.scrollTo({ top: 0, behavior: 'smooth' })
       } else {
         setStatus('failed')
@@ -129,20 +146,12 @@ export default function Apply() {
     if (errors[name]) setErrors((s) => ({ ...s, [name]: undefined }))
   }
 
-  if (status === 'done') {
+  if (status === 'payment' && applicant) {
     return (
       <>
-        <PageBanner title="Application Form" crumb="Apply" />
+        <PageBanner title="Application Fee" crumb="Apply" />
         <section className="af">
-          <div className="wrap af-done">
-            <span className="af-done-icon" aria-hidden="true">
-              <svg width="40" height="40" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </span>
-            <h2>Application submitted!</h2>
-            <p>Thank you. We have received your application and documents. Our team will contact you shortly.</p>
-            <p className="af-done-small">For any questions, call <a href={`tel:${site.mobile.tel}`}>{site.mobile.display}</a>.</p>
-            <Link to="/" className="ap-btn ap-btn-red">Back to home</Link>
-          </div>
+          <PaymentStep applicant={applicant} />
         </section>
       </>
     )
@@ -247,7 +256,7 @@ export default function Apply() {
             <div className="af-fee">
               <span>Application fee</span>
               <strong>{APPLICATION_FEE}</strong>
-              <small>Our team will share the payment details after you submit.</small>
+              <small>You will pay by UPI on the next screen, right after you submit.</small>
             </div>
 
             {/* Hidden from people; spam bots fill it in */}
@@ -261,7 +270,7 @@ export default function Apply() {
             {status === 'failed' && <p className="af-summary" role="alert">{message}</p>}
 
             <button type="submit" className="ap-btn ap-btn-red af-submit" disabled={sending}>
-              {sending ? 'Submitting…' : 'Submit application'}
+              {sending ? 'Submitting…' : 'Submit and continue to payment'}
             </button>
             <p className="af-privacy">
               By submitting, you agree to our <Link to="/privacy-policy">Privacy Policy</Link>.
