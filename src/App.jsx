@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
+import ContactFloat from './components/ContactFloat.jsx'
 import InProgress from './pages/InProgress.jsx'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
@@ -19,22 +20,25 @@ import Apply from './pages/Apply.jsx'
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="programs" element={<Programs />} />
-        <Route path="programs/:slug" element={<ProgramDetail />} />
-        <Route path="scholarship" element={<Scholarship />} />
-        <Route path="test-prep" element={<TestPrep />} />
-        <Route path="clients" element={<Clients />} />
-        <Route path="faqs" element={<Faqs />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="apply" element={<Apply />} />
-        <Route path="terms-and-conditions" element={<Legal page="terms" />} />
-        <Route path="privacy-policy" element={<Legal page="privacy" />} />
-        <Route path="*" element={<InProgress />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="programs" element={<Programs />} />
+          <Route path="programs/:slug" element={<ProgramDetail />} />
+          <Route path="scholarship" element={<Scholarship />} />
+          <Route path="test-prep" element={<TestPrep />} />
+          <Route path="clients" element={<Clients />} />
+          <Route path="faqs" element={<Faqs />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="apply" element={<Apply />} />
+          <Route path="terms-and-conditions" element={<Legal page="terms" />} />
+          <Route path="privacy-policy" element={<Legal page="privacy" />} />
+          <Route path="*" element={<InProgress />} />
+        </Route>
+      </Routes>
+      <ContactFloat />
+    </>
   )
 }
