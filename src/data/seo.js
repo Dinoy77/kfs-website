@@ -11,7 +11,7 @@ export const descriptions = {
   '/test-prep': 'KEAM and NEET preparation and admission guidance at Kerala Finishing School, Thiruvananthapuram – practice tests, counselling and allotment support.',
   '/clients': 'Organisations and institutions that work with Kerala Finishing School, Thiruvananthapuram.',
   '/faqs': 'Answers to common questions about Kerala Finishing School programs, admissions, Pay After Placement and scholarships.',
-  '/contact': 'Contact Kerala Finishing School, 2nd Floor, Cheenkayil Building, Opp. MG College, Thiruvananthapuram. Call +91 77360 25600.',
+  '/contact': 'Contact Kerala Finishing School, Reach Us Business Hub, KJ Square, Kaimanam, Thiruvananthapuram. Call +91 77360 25600.',
   '/apply': 'Apply online to Kerala Finishing School – MBA, PGDM and MCA Pay After Placement, B Pharm, D Pharm and pharma programs.',
   '/terms-and-conditions': 'Terms and conditions for using the Kerala Finishing School website.',
   '/privacy-policy': 'How Kerala Finishing School collects, uses and protects your personal information.',

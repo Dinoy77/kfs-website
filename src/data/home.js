@@ -138,7 +138,7 @@ export const services = {
 export const contact = {
   kicker: 'Get in touch',
   title: 'Contact us for any query',
-  addressShort: '2nd Floor, Cheenkayil Building, Opp. MG College, Paruthippara, Thiruvananthapuram',
+  addressShort: 'Reach Us Business Hub, KJ Square, TC 52/936, Kaimanam PO, Thiruvananthapuram 695040',
   formTitle: 'Send us a message',
   // Options in the "Select your option" dropdown
   options: [

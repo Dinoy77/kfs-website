@@ -40,8 +40,10 @@ export default function Footer() {
             )}
           </Link>
           <p>
-            Kerala Finishing School is a well-planned organisation with Startup India recognition,
-            focused on student talent acquisition and skill development.
+            Kerala Finishing School (KFS) provides strategically designed academic programmes, professional
+            skills and industry-oriented training to empower students and working professionals in Kerala
+            to build better futures. We are committed to bridging the gap between industry requirements and
+            workforce capabilities by connecting skilled talent with the right career opportunities.
           </p>
         </div>
 

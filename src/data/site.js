@@ -9,12 +9,12 @@ export const site = {
   logo: '/img/logo.jpg',
 
   address: {
-    line1: '2nd Floor, Cheenkayil Building',
-    line2: 'Opp. MG College, Paruthippara',
-    city: 'Thiruvananthapuram 695015',
-    mapUrl: 'https://goo.gl/maps/Zd4BCynmTb98ivUJ6',
+    line1: 'Reach Us Business Hub, KJ Square',
+    line2: 'TC 52/936, Kaimanam PO',
+    city: 'Thiruvananthapuram, Keralam 695040, India',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Reach+Us+Business+Hub+KJ+Square+Kaimanam+Thiruvananthapuram+695040',
     mapEmbed:
-      'https://maps.google.com/maps?q=8.52561,76.93850&z=17&output=embed',
+      'https://maps.google.com/maps?q=Reach%20Us%20Business%20Hub%2C%20KJ%20Square%2C%20Kaimanam%2C%20Thiruvananthapuram%20695040&z=16&output=embed',
   },
 
   phone: { display: '080-4202 4160', tel: '+918042024160' },
