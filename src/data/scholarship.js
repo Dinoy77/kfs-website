@@ -9,7 +9,7 @@ export const scholarship = {
   photoAlt: 'Pharmacy student in a white coat holding a book',
   tag: 'B-Pharm Lateral Entry',
   malayalam: 'സൗജന്യ പഠനം', // "Free education"
-  headline: 'Study B-Pharm free of cost, with a free laptop',
+  headline: 'Study B Pharm Lateral Entry with Full Scholarship & Laptop',
   intro:
     'The B-Pharm Lateral Entry program is designed for students who have successfully completed the two-year D-Pharm diploma. It helps you gain deeper knowledge in pharmacy and opens up better job opportunities than the D-Pharm alone.',
   quote: '“Where Technology and Learning Come Together”',
